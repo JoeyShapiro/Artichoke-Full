@@ -11,7 +11,6 @@ class Items(Resource):
         parser.add_argument('family', required=True)  # add args
         parser.add_argument('passphrase', required=True)
         parser.add_argument('given', required=True)
-        parser.add_argument('item', required=True)
         
         args = parser.parse_args()  # parse arguments to dictionary
         
@@ -19,8 +18,7 @@ class Items(Resource):
         new_data = {
             'family': args['family'],
             'given': args['given'],
-            'passphrase': args['passphrase'],
-            'item': args['item']
+            'passphrase': args['passphrase']
         }
         # read our CSV
         # data = pd.read_csv('users.csv')

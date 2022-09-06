@@ -6,6 +6,6 @@
 # RUN pip install flask
 FROM python
 RUN pip install flask flask_restful
-ADD ArtichokePlant.py ./
+ADD ArtichokePlant/ArtichokePlant.py ./
 CMD ["python", "ArtichokePlant.py"]
 EXPOSE 5000
