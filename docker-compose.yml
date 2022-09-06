@@ -1,0 +1,27 @@
+version: '4.8.1'
+services:
+    db-test:
+        container_name: db-test
+        image: mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: toor
+            MYSQL_DATABASE: artichoke
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: toor
+        ports:
+            - "9906:3306"
+    flask-test:
+        container_name: flask-test
+        build: .
+        depends_on:
+            - db-test
+        ports:
+            - 6060:5000
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        ports:
+            - '7070:80'
+        environment:
+            PMA_HOST: db-test
+        depends_on:
+            - db-test

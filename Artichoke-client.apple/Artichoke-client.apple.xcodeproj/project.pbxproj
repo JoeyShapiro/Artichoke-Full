@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CDED6C2428C40776000A5282 /* Artichoke_client_appleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDED6C2328C40776000A5282 /* Artichoke_client_appleApp.swift */; };
+		CDED6C2628C40776000A5282 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDED6C2528C40776000A5282 /* ContentView.swift */; };
+		CDED6C2828C40777000A5282 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDED6C2728C40777000A5282 /* Assets.xcassets */; };
+		CDED6C2C28C40777000A5282 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CDED6C2B28C40777000A5282 /* Preview Assets.xcassets */; };
+		CDED6C3628C40777000A5282 /* Artichoke_client_appleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDED6C3528C40777000A5282 /* Artichoke_client_appleTests.swift */; };
+		CDED6C4028C40777000A5282 /* Artichoke_client_appleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDED6C3F28C40777000A5282 /* Artichoke_client_appleUITests.swift */; };
+		CDED6C4228C40777000A5282 /* Artichoke_client_appleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDED6C4128C40777000A5282 /* Artichoke_client_appleUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CDED6C3228C40777000A5282 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CDED6C1828C40776000A5282 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDED6C1F28C40776000A5282;
+			remoteInfo = "Artichoke-client.apple";
+		};
+		CDED6C3C28C40777000A5282 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CDED6C1828C40776000A5282 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDED6C1F28C40776000A5282;
+			remoteInfo = "Artichoke-client.apple";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CDED6C2028C40776000A5282 /* Artichoke-client.apple.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Artichoke-client.apple.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDED6C2328C40776000A5282 /* Artichoke_client_appleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artichoke_client_appleApp.swift; sourceTree = "<group>"; };
+		CDED6C2528C40776000A5282 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CDED6C2728C40777000A5282 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CDED6C2928C40777000A5282 /* Artichoke_client_apple.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Artichoke_client_apple.entitlements; sourceTree = "<group>"; };
+		CDED6C2B28C40777000A5282 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		CDED6C3128C40777000A5282 /* Artichoke-client.appleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Artichoke-client.appleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDED6C3528C40777000A5282 /* Artichoke_client_appleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artichoke_client_appleTests.swift; sourceTree = "<group>"; };
+		CDED6C3B28C40777000A5282 /* Artichoke-client.appleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Artichoke-client.appleUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDED6C3F28C40777000A5282 /* Artichoke_client_appleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artichoke_client_appleUITests.swift; sourceTree = "<group>"; };
+		CDED6C4128C40777000A5282 /* Artichoke_client_appleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artichoke_client_appleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CDED6C1D28C40776000A5282 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDED6C2E28C40777000A5282 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDED6C3828C40777000A5282 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CDED6C1728C40776000A5282 = {
+			isa = PBXGroup;
+			children = (
+				CDED6C2228C40776000A5282 /* Artichoke-client.apple */,
+				CDED6C3428C40777000A5282 /* Artichoke-client.appleTests */,
+				CDED6C3E28C40777000A5282 /* Artichoke-client.appleUITests */,
+				CDED6C2128C40776000A5282 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CDED6C2128C40776000A5282 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CDED6C2028C40776000A5282 /* Artichoke-client.apple.app */,
+				CDED6C3128C40777000A5282 /* Artichoke-client.appleTests.xctest */,
+				CDED6C3B28C40777000A5282 /* Artichoke-client.appleUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CDED6C2228C40776000A5282 /* Artichoke-client.apple */ = {
+			isa = PBXGroup;
+			children = (
+				CDED6C2328C40776000A5282 /* Artichoke_client_appleApp.swift */,
+				CDED6C2528C40776000A5282 /* ContentView.swift */,
+				CDED6C2728C40777000A5282 /* Assets.xcassets */,
+				CDED6C2928C40777000A5282 /* Artichoke_client_apple.entitlements */,
+				CDED6C2A28C40777000A5282 /* Preview Content */,
+			);
+			path = "Artichoke-client.apple";
+			sourceTree = "<group>";
+		};
+		CDED6C2A28C40777000A5282 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				CDED6C2B28C40777000A5282 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		CDED6C3428C40777000A5282 /* Artichoke-client.appleTests */ = {
+			isa = PBXGroup;
+			children = (
+				CDED6C3528C40777000A5282 /* Artichoke_client_appleTests.swift */,
+			);
+			path = "Artichoke-client.appleTests";
+			sourceTree = "<group>";
+		};
+		CDED6C3E28C40777000A5282 /* Artichoke-client.appleUITests */ = {
+			isa = PBXGroup;
+			children = (
+				CDED6C3F28C40777000A5282 /* Artichoke_client_appleUITests.swift */,
+				CDED6C4128C40777000A5282 /* Artichoke_client_appleUITestsLaunchTests.swift */,
+			);
+			path = "Artichoke-client.appleUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CDED6C1F28C40776000A5282 /* Artichoke-client.apple */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDED6C4528C40777000A5282 /* Build configuration list for PBXNativeTarget "Artichoke-client.apple" */;
+			buildPhases = (
+				CDED6C1C28C40776000A5282 /* Sources */,
+				CDED6C1D28C40776000A5282 /* Frameworks */,
+				CDED6C1E28C40776000A5282 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Artichoke-client.apple";
+			productName = "Artichoke-client.apple";
+			productReference = CDED6C2028C40776000A5282 /* Artichoke-client.apple.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CDED6C3028C40777000A5282 /* Artichoke-client.appleTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDED6C4828C40777000A5282 /* Build configuration list for PBXNativeTarget "Artichoke-client.appleTests" */;
+			buildPhases = (
+				CDED6C2D28C40777000A5282 /* Sources */,
+				CDED6C2E28C40777000A5282 /* Frameworks */,
+				CDED6C2F28C40777000A5282 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CDED6C3328C40777000A5282 /* PBXTargetDependency */,
+			);
+			name = "Artichoke-client.appleTests";
+			productName = "Artichoke-client.appleTests";
+			productReference = CDED6C3128C40777000A5282 /* Artichoke-client.appleTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CDED6C3A28C40777000A5282 /* Artichoke-client.appleUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDED6C4B28C40777000A5282 /* Build configuration list for PBXNativeTarget "Artichoke-client.appleUITests" */;
+			buildPhases = (
+				CDED6C3728C40777000A5282 /* Sources */,
+				CDED6C3828C40777000A5282 /* Frameworks */,
+				CDED6C3928C40777000A5282 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CDED6C3D28C40777000A5282 /* PBXTargetDependency */,
+			);
+			name = "Artichoke-client.appleUITests";
+			productName = "Artichoke-client.appleUITests";
+			productReference = CDED6C3B28C40777000A5282 /* Artichoke-client.appleUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CDED6C1828C40776000A5282 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1400;
+				LastUpgradeCheck = 1400;
+				TargetAttributes = {
+					CDED6C1F28C40776000A5282 = {
+						CreatedOnToolsVersion = 14.0;
+					};
+					CDED6C3028C40777000A5282 = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = CDED6C1F28C40776000A5282;
+					};
+					CDED6C3A28C40777000A5282 = {
+						CreatedOnToolsVersion = 14.0;
+						TestTargetID = CDED6C1F28C40776000A5282;
+					};
+				};
+			};
+			buildConfigurationList = CDED6C1B28C40776000A5282 /* Build configuration list for PBXProject "Artichoke-client.apple" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CDED6C1728C40776000A5282;
+			productRefGroup = CDED6C2128C40776000A5282 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CDED6C1F28C40776000A5282 /* Artichoke-client.apple */,
+				CDED6C3028C40777000A5282 /* Artichoke-client.appleTests */,
+				CDED6C3A28C40777000A5282 /* Artichoke-client.appleUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CDED6C1E28C40776000A5282 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDED6C2C28C40777000A5282 /* Preview Assets.xcassets in Resources */,
+				CDED6C2828C40777000A5282 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDED6C2F28C40777000A5282 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDED6C3928C40777000A5282 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CDED6C1C28C40776000A5282 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDED6C2628C40776000A5282 /* ContentView.swift in Sources */,
+				CDED6C2428C40776000A5282 /* Artichoke_client_appleApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDED6C2D28C40777000A5282 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDED6C3628C40777000A5282 /* Artichoke_client_appleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDED6C3728C40777000A5282 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDED6C4028C40777000A5282 /* Artichoke_client_appleUITests.swift in Sources */,
+				CDED6C4228C40777000A5282 /* Artichoke_client_appleUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CDED6C3328C40777000A5282 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDED6C1F28C40776000A5282 /* Artichoke-client.apple */;
+			targetProxy = CDED6C3228C40777000A5282 /* PBXContainerItemProxy */;
+		};
+		CDED6C3D28C40777000A5282 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDED6C1F28C40776000A5282 /* Artichoke-client.apple */;
+			targetProxy = CDED6C3C28C40777000A5282 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		CDED6C4328C40777000A5282 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		CDED6C4428C40777000A5282 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+			};
+			name = Release;
+		};
+		CDED6C4628C40777000A5282 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Artichoke-client.apple/Artichoke_client_apple.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Artichoke-client.apple/Preview Content\"";
+				DEVELOPMENT_TEAM = HNA3JW5W4B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Artichoke;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garden.Artichoke-client-apple";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CDED6C4728C40777000A5282 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Artichoke-client.apple/Artichoke_client_apple.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Artichoke-client.apple/Preview Content\"";
+				DEVELOPMENT_TEAM = HNA3JW5W4B;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = Artichoke;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garden.Artichoke-client-apple";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CDED6C4928C40777000A5282 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garden.Artichoke-client-appleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Artichoke-client.apple.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Artichoke-client.apple";
+			};
+			name = Debug;
+		};
+		CDED6C4A28C40777000A5282 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garden.Artichoke-client-appleTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Artichoke-client.apple.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Artichoke-client.apple";
+			};
+			name = Release;
+		};
+		CDED6C4C28C40777000A5282 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garden.Artichoke-client-appleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Artichoke-client.apple";
+			};
+			name = Debug;
+		};
+		CDED6C4D28C40777000A5282 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.garden.Artichoke-client-appleUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "Artichoke-client.apple";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CDED6C1B28C40776000A5282 /* Build configuration list for PBXProject "Artichoke-client.apple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDED6C4328C40777000A5282 /* Debug */,
+				CDED6C4428C40777000A5282 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDED6C4528C40777000A5282 /* Build configuration list for PBXNativeTarget "Artichoke-client.apple" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDED6C4628C40777000A5282 /* Debug */,
+				CDED6C4728C40777000A5282 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDED6C4828C40777000A5282 /* Build configuration list for PBXNativeTarget "Artichoke-client.appleTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDED6C4928C40777000A5282 /* Debug */,
+				CDED6C4A28C40777000A5282 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDED6C4B28C40777000A5282 /* Build configuration list for PBXNativeTarget "Artichoke-client.appleUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDED6C4C28C40777000A5282 /* Debug */,
+				CDED6C4D28C40777000A5282 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CDED6C1828C40776000A5282 /* Project object */;
+}
