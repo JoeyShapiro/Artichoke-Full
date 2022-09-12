@@ -50,33 +50,33 @@ struct ContentView: View {
                         }
                     }
                 }
-            Section(header: Text("In Progress")) {
-                ForEach(items, id: \.id) { item in
-                    if !item.collected {
-                        Button(action: {
-                            self.showingSheet = true
-                        }) {
+                Section(header: Text("In Progress")) {
+                    ForEach(items, id: \.id) { item in
+                        if !item.collected {
+                            Button(action: {
+                                self.showingSheet = true
+                            }) {
+                                HStack {
+                                    Text(item.category)
+                                        .frame(width: geometry.size.width * 0.1)
+                                    Text(item.name)
+                                }
+                            }
+                        }
+                    }.onDelete(perform: complete)
+                }
+                
+                Section(header: Text("Completed")) {
+                    ForEach(items, id: \.id) { item in
+                        if item.collected {
                             HStack {
-                                Text(item.category)
-                                    .frame(width: geometry.size.width * 0.1)
-                                Text(item.name)
+                                Text(item.category).strikethrough(item.collected, color: .accentColor)
+                                Text(item.name).strikethrough(item.collected, color: .accentColor)
                             }
                         }
                     }
-                }.onDelete(perform: complete)
-            }
-            
-            Section(header: Text("Completed")) {
-                ForEach(items, id: \.id) { item in
-                    if item.collected {
-                        HStack {
-                            Text(item.category).strikethrough(item.collected, color: .accentColor)
-                            Text(item.name).strikethrough(item.collected, color: .accentColor)
-                        }
-                    }
                 }
-            }
-            Text("github.com/JoeyShapiro/Artichoke").foregroundColor(.accentColor)
+                Text("github.com/JoeyShapiro/Artichoke").foregroundColor(.accentColor)
             }
         }
     }
@@ -217,7 +217,7 @@ func apiCall() {
     
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    let body: [String: AnyHashable] = ["family": "shapiro", "passphrase": "sha256", "given": "joey"]
+    let body: [String: AnyHashable] = ["family_id": "1", "passphrase_hash": "sha256", "given": "joey"]
     request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
     
     let task = URLSession.shared.dataTask(with: request) { data, _, error in
@@ -226,8 +226,11 @@ func apiCall() {
         }
         
         do {
-            let response = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-            print("SUCCESS", response)
+            let response = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any]
+            print("SUCCESS", response!)
+            let jsonP = response?["data"] as! [String:Any]
+            let date = NSDate(timeIntervalSince1970: TimeInterval(jsonP["expires_on"] as! Int))
+            print(date)
         }
         catch {
             print(error)
