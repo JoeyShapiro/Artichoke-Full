@@ -51,7 +51,7 @@ struct ContentView: View {
                     }
                 }
                 Section(header: Text("In Progress")) {
-                    let apiItemsToCollect = apiPostReq(api_url: "http://localhost:6060/itemsleft", api_body: ["family_id": "1", "passphrase_hash": "sha256", "given": "joey"])
+                    let apiItemsToCollect = apiPostReq(api_url: "http://localhost:6060/itemsleft", api_body: ["family_id": "1", "passphrase_hash": "sha256", "given_id": "1"])
                     let _ = print(apiItemsToCollect)
                     let apiItems = apiItemsToCollect["items"] as! [[String:Any]]
                     let items = apiItems.map { apiItem -> Item in
@@ -75,7 +75,7 @@ struct ContentView: View {
                 }
                 
                 Section(header: Text("Recently Completed")) {
-                    let apiItemsToCollect = apiPostReq(api_url: "http://localhost:6060/itemscollected", api_body: ["family_id": "1", "passphrase_hash": "sha256", "given": "joey"])
+                    let apiItemsToCollect = apiPostReq(api_url: "http://localhost:6060/itemscollected", api_body: ["family_id": "1", "passphrase_hash": "sha256", "given_id": "1"])
                     let _ = print("collected", apiItemsToCollect)
                     let apiItems = apiItemsToCollect["items"] as! [[String:Any]]
                     let items = apiItems.map { apiItem -> Item in
@@ -103,7 +103,8 @@ struct ContentView: View {
     }
     
     func complete(at offsets: IndexSet) {
-        makePostCall()
+        _ = apiPostReq(api_url: "http://localhost:6060/itemcollect", api_body: ["family_id": "1", "passphrase_hash":"sha256", "given_id": "1", "item_id": "1"])
+        
     }
 }
 

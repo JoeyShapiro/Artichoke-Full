@@ -1,3 +1,7 @@
+-- api user account
+create user rest_api;
+grant execute on artichoke.* to rest_api;
+
 -- create items table
 create table items
 (
