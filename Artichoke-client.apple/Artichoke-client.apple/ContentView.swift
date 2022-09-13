@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct Item {
-    var id: UUID
+    var id: Int
     var category: String
-    var name: String
-    var collected: Bool
+    var item: String
 }
 
 struct ContentView: View {
@@ -20,6 +19,7 @@ struct ContentView: View {
     @State var items = [Item]()
     @State var itemName = ""
     @State var itemCategory = "Deli"
+    
     var body: some View {
         GeometryReader { geometry in
             List {
@@ -51,30 +51,51 @@ struct ContentView: View {
                     }
                 }
                 Section(header: Text("In Progress")) {
-                    ForEach(items, id: \.id) { item in
-                        if !item.collected {
-                            Button(action: {
-                                self.showingSheet = true
-                            }) {
-                                HStack {
-                                    Text(item.category)
-                                        .frame(width: geometry.size.width * 0.1)
-                                    Text(item.name)
-                                }
+                    let apiItemsToCollect = apiPostReq(api_url: "http://localhost:6060/itemsleft", api_body: ["family_id": "1", "passphrase_hash": "sha256", "given": "joey"])
+                    let _ = print(apiItemsToCollect)
+                    let apiItems = apiItemsToCollect["items"] as! [[String:Any]]
+                    let items = apiItems.map { apiItem -> Item in
+                        let id = apiItem["id"] as? Int ?? -1
+                        let category = apiItem["category"] as? String ?? ""
+                        let item = apiItem["item"] as? String ?? ""
+                        return Item(id: id, category: category, item: item)
+                    }
+                    
+                    ForEach(items, id: \.id) {item in
+                        Button(action: {
+                            self.showingSheet = true
+                        }) {
+                            HStack {
+                                Text(item.category)
+                                    .frame(width: geometry.size.width * 0.1)
+                                Text(item.item)
                             }
                         }
                     }.onDelete(perform: complete)
                 }
                 
-                Section(header: Text("Completed")) {
-                    ForEach(items, id: \.id) { item in
-                        if item.collected {
+                Section(header: Text("Recently Completed")) {
+                    let apiItemsToCollect = apiPostReq(api_url: "http://localhost:6060/itemscollected", api_body: ["family_id": "1", "passphrase_hash": "sha256", "given": "joey"])
+                    let _ = print("collected", apiItemsToCollect)
+                    let apiItems = apiItemsToCollect["items"] as! [[String:Any]]
+                    let items = apiItems.map { apiItem -> Item in
+                        let id = apiItem["id"] as? Int ?? -1
+                        let category = apiItem["category"] as? String ?? ""
+                        let item = apiItem["item"] as? String ?? ""
+                        return Item(id: id, category: category, item: item)
+                    }
+                    
+                    ForEach(items, id: \.id) {item in
+                        Button(action: {
+                            self.showingSheet = true
+                        }) {
                             HStack {
-                                Text(item.category).strikethrough(item.collected, color: .accentColor)
-                                Text(item.name).strikethrough(item.collected, color: .accentColor)
+                                Text(item.category)
+                                    .frame(width: geometry.size.width * 0.1)
+                                Text(item.item)
                             }
                         }
-                    }
+                    }.onDelete(perform: complete)
                 }
                 Text("github.com/JoeyShapiro/Artichoke").foregroundColor(.accentColor)
             }
@@ -82,7 +103,6 @@ struct ContentView: View {
     }
     
     func complete(at offsets: IndexSet) {
-        items[offsets[offsets.startIndex]].collected = true
         makePostCall()
     }
 }
@@ -94,7 +114,7 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 private func AddItem(items: inout [Item], name: String, category: String) {
-    let item = Item(id: UUID(), category: category, name: name, collected: false)
+    let item = Item(id: 0, category: category, item: name)
     
     items.append(item)
 }
@@ -237,4 +257,41 @@ func apiCall() {
         }
     }
     task.resume()
+}
+
+func apiPostReq(api_url: String, api_body: [String: AnyHashable]) -> [String:Any] {
+    var jsonP: [String:Any] = [:]
+    
+    guard let url = URL(string: api_url) else {
+        jsonP["error"] = "something happened"
+        return jsonP
+    }
+    
+    var request = URLRequest(url: url)
+    
+    request.httpMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    let body: [String: AnyHashable] = api_body
+    request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
+    
+    let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+    let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        guard let data = data, error == nil else {
+            return
+        }
+
+        do {
+            let response = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String:Any]
+            jsonP = response?["data"] as! [String:Any]
+            print("SUCCESS")
+        }
+        catch {
+            jsonP["error"] = error
+        }
+        semaphore.signal()
+    }
+    task.resume()
+    semaphore.wait()
+    
+    return jsonP
 }

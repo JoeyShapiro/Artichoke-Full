@@ -83,6 +83,53 @@ alter table items
 
 -- maybe add notes to items
 
+-- stored procedures
+-- add item
+DELIMITER //
+CREATE PROCEDURE item_add (IN given_family_id int, IN given_user_id int, IN given_item varchar(32), IN given_category_id int)
+    BEGIN
+        SET @now_time := NOW();
+
+        INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
+            VALUES (given_family_id, given_item, given_category_id, DEFAULT, @now_time);
+
+        -- this should be more than enough
+        -- but really date should be more than enough
+        SET @current_item_id := (SELECT id FROM items WHERE modified_on=current_time
+                                                        AND family_id=given_family_id AND item=given_item
+                                                        AND category_id=given_category_id);
+        INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
+            VALUES (given_family_id, given_user_id, 'add', @current_item_id, @now_time);
+    END //
+
+-- collect item
+DELIMITER //
+CREATE PROCEDURE item_collect (IN given_family_id int, IN given_user_id int, IN given_item_id int)
+    BEGIN
+        SET @now_time := NOW();
+
+        UPDATE artichoke.items t
+        SET t.collected = 1, t.modified_on = @now_time
+        WHERE t.id = given_item_id;
+
+        INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
+            VALUES (given_family_id, given_user_id, 'collect', @current_item_id, @now_time);
+    END //
+
+-- remove item
+DELIMITER //
+CREATE PROCEDURE item_remove (IN given_family_id int, IN given_user_id int, IN given_item_id int)
+    BEGIN
+        SET @now_time := NOW();
+
+        DELETE
+        FROM artichoke.items
+        WHERE id = given_item_id;
+
+        INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
+            VALUES (given_family_id, given_user_id, 'remove', @current_item_id, @now_time);
+    END //
+
 -- dummy data
 -- families
 INSERT INTO artichoke.families (family_name, passphrase_hash, sub_expires_on)
@@ -104,37 +151,57 @@ INSERT INTO artichoke.categories (category, family_id)
 INSERT INTO artichoke.categories (category, family_id)
     VALUES ('Chips', 1);
 -- items
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'White', 1, DEFAULT, '2022-09-09 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Pumpkin', 1, 1, '2022-09-09 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Wheat', 1, 1, '2022-09-09 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Crossaint', 3, DEFAULT, '2022-09-09 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Fries', 4, DEFAULT, '2022-09-09 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Frozen Breakfast', 4, DEFAULT, '2022-09-09 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Fries', 4, DEFAULT, '2022-09-09 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Gold Fish', 5, 1, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Crackers', 5, 1, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Crackers', 5, 1, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Little Chips', 6, 1, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Peanuts', 6, 1, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Slim Jim', 6, 1, '2022-09-11 22:11:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Tomato Soup', 5, 1, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Ham', 1, DEFAULT, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Turkey', 1, 1, '2022-09-11 22:16:05');
-INSERT INTO artichoke.items (family_id, item, category_id, collected, modified_on)
-    VALUES (1, 'Chicken', 1, 1, '2022-09-11 22:16:05');
+CALL item_add(1, 1, 'White', 1);
+CALL item_add(1, 1, 'Pumpkin', 1);
+CALL item_add(1, 1, 'Wheat', 1);
+CALL item_add(1, 1, 'Crossaint', 1);
+CALL item_add(1, 1, 'Fries', 4);
+CALL item_add(1, 1, 'Frozen Breakfast', 4);
+CALL item_add(1, 1, 'Curly Fries', 4);
+CALL item_add(1, 1, 'Gold Fish', 5);
+CALL item_add(1, 1, 'Crackers', 5);
+CALL item_add(1, 1, 'Little Chips', 6);
+CALL item_add(1, 1, 'Peanuts', 6);
+CALL item_add(1, 1, 'Slim Jims', 6);
+CALL item_add(1, 1, 'Tomato Soup', 5);
+CALL item_add(1, 1, 'Ham', 1);
+CALL item_add(1, 1, 'Turkey', 1);
+CALL item_add(1, 1, 'Chicken', 1);
+
+CALL item_collect(1, 1, 1);
+CALL item_collect(1, 1, 2);
+CALL item_collect(1, 1, 3);
+CALL item_collect(1, 1, 4);
+CALL item_collect(1, 1, 5);
+CALL item_collect(1, 1, 6);
+CALL item_collect(1, 1, 7);
+CALL item_collect(1, 1, 8);
+CALL item_collect(1, 1, 9);
+CALL item_collect(1, 1, 10);
+CALL item_collect(1, 1, 11);
+
+-- ? could use this, but found better way
+-- -- items
+-- DELIMITER #
+-- CREATE TRIGGER items_add AFTER INSERT ON items
+--     FOR EACH ROW
+--     BEGIN
+--         INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
+--             VALUES (NEW.family_id, NEW.last_modified_by, 'add', NEW.id, NEW.modified_on);
+--     END #
+
+-- DELIMITER #
+-- CREATE TRIGGER items_update AFTER UPDATE ON items
+--     FOR EACH ROW
+--     BEGIN
+--         INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
+--             VALUES (NEW.family_id, NEW.last_modified_by, 'modify', NEW.id, NEW.modified_on);
+--     end #
+
+-- DELIMITER #
+-- CREATE TRIGGER items_remove AFTER DELETE ON items
+--     FOR EACH ROW
+--     BEGIN
+--         INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
+--             VALUES (OLD.family_id, OLD.last_modified_by, 'remove', OLD.id, OLD.modified_on);
+--     end #
