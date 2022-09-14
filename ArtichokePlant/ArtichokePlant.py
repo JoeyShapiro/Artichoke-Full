@@ -1,5 +1,3 @@
-from tkinter.font import families
-from typing_extensions import Required
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import mysql.connector

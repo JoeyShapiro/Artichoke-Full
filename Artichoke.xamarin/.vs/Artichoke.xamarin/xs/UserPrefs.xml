@@ -1,0 +1,32 @@
+﻿<Properties StartupConfiguration="{9C073859-1EC9-4926-80E8-3A9773AC5907}|Default">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget." />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.Android PreferredExecutionTarget="Android.SelectDevice" />
+  <Xamarin.Addins.Core.Project ActiveDebugTarget="Android.SelectDevice" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Artichoke.xamarin/Artichoke.xamarin/Views/AboutPage.xaml">
+    <Files>
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/AboutPage.xaml.cs" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/AboutPage.xaml" Line="25" Column="28" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/GettingStarted.txt" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Artichoke.xamarin" expanded="True">
+            <Node name="Artichoke.xamarin" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="Views" expanded="True">
+                <Node name="AboutPage.xaml" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+</Properties>
