@@ -32,7 +32,7 @@ class MyFamily(Resource):
         
         args = parser.parse_args()  # parse arguments to dictionary
 
-        cursor.execute("SELECT * FROM families WHERE family_name=%s AND passphrase_hash=%s", ( args['family_id'], args['passphrase_hash'] ))
+        cursor.execute("SELECT * FROM families WHERE id=%s AND passphrase_hash=%s", ( args['family_id'], args['passphrase_hash'] ))
         
         row = []
         for x in cursor:
@@ -55,7 +55,6 @@ class MyFamily(Resource):
         
 
         return {'data': data}, 200  # return data with 200 OK
-
 
 class ItemsLeft(Resource):
     def post(self):

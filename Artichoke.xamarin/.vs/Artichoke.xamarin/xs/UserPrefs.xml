@@ -1,32 +1,38 @@
-﻿<Properties StartupConfiguration="{9C073859-1EC9-4926-80E8-3A9773AC5907}|Default">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget." />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.Android PreferredExecutionTarget="Android.SelectDevice" />
-  <Xamarin.Addins.Core.Project ActiveDebugTarget="Android.SelectDevice" />
+﻿<Properties StartupConfiguration="{9DF86799-A907-436A-B982-6C38E8A6355F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
+  <Debugger.DebugSourceFolders>
+    <String>/Users/oniichan/Library/Caches/VisualStudio/17.0/Symbols/raw.githubusercontent.com/mono/mono/dffa5ab92245f2419238a35b7c2052e9a24036b4</String>
+  </Debugger.DebugSourceFolders>
+  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.Android PreferredExecutionTarget="Android.pixel_5_-_api_33" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Artichoke.xamarin/Artichoke.xamarin/Views/AboutPage.xaml">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Artichoke.xamarin/Artichoke.xamarin/ViewModels/ViewModelFamily.cs">
     <Files>
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/AboutPage.xaml.cs" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/AboutPage.xaml" Line="25" Column="28" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/GettingStarted.txt" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/ViewModelFamily.cs" Line="33" Column="61" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Artichoke.xamarin" expanded="True">
             <Node name="Artichoke.xamarin" expanded="True">
-              <Node name="Dependencies" expanded="True" />
+              <Node name="ViewModels" expanded="True" />
               <Node name="Views" expanded="True">
                 <Node name="AboutPage.xaml" expanded="True" />
+                <Node name="ItemsPage.xaml" expanded="True" />
+                <Node name="PageFamily.xaml" expanded="True" />
               </Node>
+              <Node name="App.xaml" expanded="True" />
+              <Node name="AppShell.xaml" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.D8306490-81E2-429C-967C-C087E6158CDE" />
+  <Xamarin.Addins.Core.Project ActiveDebugTarget="Android.pixel_5_-_api_33" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.MonoDroid LastDeploySdkVersion="13.0.0.0" />
 </Properties>
