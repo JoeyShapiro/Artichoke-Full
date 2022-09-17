@@ -58,6 +58,9 @@
     <PackageReference Include="System.Net.Http.Json">
       <Version>7.0.0-rc.1.22426.10</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

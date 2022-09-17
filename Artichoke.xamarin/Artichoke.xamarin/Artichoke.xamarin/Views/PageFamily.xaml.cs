@@ -18,16 +18,12 @@ namespace Artichoke.xamarin.Views
 			InitializeComponent ();
 
             BindingContext = _viewModelFamily = new ViewModelFamily();
-            Console.WriteLine("hello");
         }
 
-        protected async override void OnAppearing()
+        protected override void OnAppearing()
         {
             base.OnAppearing();
-            Console.WriteLine("hello");
-
-            _viewModelFamily.Result = await _viewModelFamily.RefreshDataAsync();
-            await DisplayAlert("test", _viewModelFamily.Result, "cancel");
+            _viewModelFamily.OnAppearing();
         }
     }
 }

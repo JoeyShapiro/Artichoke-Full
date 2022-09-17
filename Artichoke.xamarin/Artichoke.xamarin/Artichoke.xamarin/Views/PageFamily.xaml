@@ -1,17 +1,70 @@
 ﻿<?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Artichoke.xamarin.Views.PageFamily"
-             xmlns:vm="clr-namespace:Artichoke.xamarin.ViewModels"
-             Title="{Binding Title}">
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+			 x:Class="Artichoke.xamarin.Views.PageFamily"
+			 xmlns:vm="clr-namespace:Artichoke.xamarin.ViewModels"
+			 Title="{Binding Title}"
+			 xmlns:local="clr-namespace:Artichoke.xamarin.ViewModels"  
+			 xmlns:model="clr-namespace:Artichoke.xamarin.Models">
 
-    <ContentPage.BindingContext>
-        <vm:ViewModelFamily />
-    </ContentPage.BindingContext>
+	<ContentPage.BindingContext>
+		<vm:ViewModelFamily />
+	</ContentPage.BindingContext>
 
-    <StackLayout>
-        <Label Text="{Binding Result}" FontSize="Title"/>
+	<!--<RefreshView x:DataType="local:ViewModelFamily" Command="{Binding LoadFamilyCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+        <CollectionView x:Name="FamilyViewList"
+                ItemsSource="{Binding MyFamily}"
+                SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10" x:DataType="model:Family">
+                        <Label Text="{Binding Name}" 
+                            LineBreakMode="NoWrap" 
+                            Style="{DynamicResource ListItemTextStyle}" 
+                            FontSize="16" />
+                        <Label Text="{Binding SubExpiration}" 
+                            LineBreakMode="NoWrap"
+                            Style="{DynamicResource ListItemDetailTextStyle}"
+                            FontSize="13" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </RefreshView>-->
 
-    </StackLayout>
+	<RefreshView x:DataType="local:ViewModelFamily" Command="{Binding LoadFamilyCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+		<CollectionView x:Name="FamilyListView"
+				  ItemsSource="{Binding MyFamily}"
+				  SelectionMode="None">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<StackLayout Padding="10" x:DataType="model:Family">
+						<Label Text="{Binding Name}" 
+							LineBreakMode="NoWrap" 
+							Style="{DynamicResource ListItemTextStyle}" 
+							FontSize="16" />
+						<Label Text="{Binding SubExpiration}" 
+							LineBreakMode="NoWrap"
+							Style="{DynamicResource ListItemDetailTextStyle}"
+							FontSize="13" />
+						<CollectionView x:Name="MembersListView"
+							ItemsSource="{Binding Members}"
+							SelectionMode="None">
+							<CollectionView.ItemTemplate>
+								<DataTemplate>
+									<StackLayout Padding="10" x:DataType="model:Member">
+										<Label Text="{Binding Given}" 
+											LineBreakMode="NoWrap" 
+											Style="{DynamicResource ListItemTextStyle}" 
+											FontSize="16" />
+									</StackLayout>
+								</DataTemplate>
+							</CollectionView.ItemTemplate>
+						</CollectionView>
+					</StackLayout>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+	</RefreshView>
 </ContentPage>
 

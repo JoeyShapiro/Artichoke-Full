@@ -42,7 +42,6 @@ class MyFamily(Resource):
         data = {
             'family': row[1],
             'expires_on': row[3],
-            'given_id': "",
             'members': []
         }
 
@@ -54,7 +53,7 @@ class MyFamily(Resource):
             data['members'].append(member)
         
 
-        return {'data': data}, 200  # return data with 200 OK
+        return data, 200  # return data with 200 OK
 
 class ItemsLeft(Resource):
     def post(self):
@@ -95,7 +94,7 @@ class ItemsLeft(Resource):
         # data = data.append(new_data, ignore_index=True)
         # # save back to CSV
         # data.to_csv('users.csv', index=False)
-        return {'data': data}, 200  # return data with 200 OK
+        return data['items'], 200  # return data with 200 OK
     
     def get(self):
         print("get")
@@ -140,7 +139,7 @@ class ItemsCollected(Resource):
         # data = data.append(new_data, ignore_index=True)
         # # save back to CSV
         # data.to_csv('users.csv', index=False)
-        return {'data': data}, 200  # return data with 200 OK
+        return data, 200  # return data with 200 OK
     
     def get(self):
         print("get")
@@ -172,7 +171,7 @@ class ItemCollect(Resource):
 
         cursor.execute("CALL item_collect(%s, %s, %s)", (family_ids[0], args['given_id'], args['item_id']))
         
-        return {'data': data}, 200
+        return data, 200
 
 api.add_resource(ItemsLeft, '/itemsleft')  # '/users' is our entry point
 api.add_resource(ItemsCollected, '/itemscollected')

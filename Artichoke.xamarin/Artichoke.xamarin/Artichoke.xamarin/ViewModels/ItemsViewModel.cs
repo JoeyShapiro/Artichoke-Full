@@ -7,6 +7,7 @@ using Xamarin.Forms;
 
 using Artichoke.xamarin.Models;
 using Artichoke.xamarin.Views;
+using Artichoke.xamarin.Services;
 
 namespace Artichoke.xamarin.ViewModels
 {
@@ -37,7 +38,7 @@ namespace Artichoke.xamarin.ViewModels
             try
             {
                 Items.Clear();
-                var items = await DataStore.GetItemsAsync(true);
+                var items = await API_Interface.GetItemsLeft();
                 foreach (var item in items)
                 {
                     Items.Add(item);
