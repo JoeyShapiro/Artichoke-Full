@@ -12,25 +12,25 @@
 	</ContentPage.BindingContext>
 
 	<!--<RefreshView x:DataType="local:ViewModelFamily" Command="{Binding LoadFamilyCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
-        <CollectionView x:Name="FamilyViewList"
-                ItemsSource="{Binding MyFamily}"
-                SelectionMode="None">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10" x:DataType="model:Family">
-                        <Label Text="{Binding Name}" 
-                            LineBreakMode="NoWrap" 
-                            Style="{DynamicResource ListItemTextStyle}" 
-                            FontSize="16" />
-                        <Label Text="{Binding SubExpiration}" 
-                            LineBreakMode="NoWrap"
-                            Style="{DynamicResource ListItemDetailTextStyle}"
-                            FontSize="13" />
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </RefreshView>-->
+		<CollectionView x:Name="FamilyViewList"
+				ItemsSource="{Binding MyFamily}"
+				SelectionMode="None">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<StackLayout Padding="10" x:DataType="model:Family">
+						<Label Text="{Binding Name}" 
+							LineBreakMode="NoWrap" 
+							Style="{DynamicResource ListItemTextStyle}" 
+							FontSize="16" />
+						<Label Text="{Binding SubExpiration}" 
+							LineBreakMode="NoWrap"
+							Style="{DynamicResource ListItemDetailTextStyle}"
+							FontSize="13" />
+					</StackLayout>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+	</RefreshView>-->
 
 	<RefreshView x:DataType="local:ViewModelFamily" Command="{Binding LoadFamilyCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
 		<CollectionView x:Name="FamilyListView"
@@ -43,7 +43,7 @@
 							LineBreakMode="NoWrap" 
 							Style="{DynamicResource ListItemTextStyle}" 
 							FontSize="16" />
-						<Label Text="{Binding SubExpiration}" 
+						<Label Text="{Binding SubExpiration, StringFormat='Subscription ends on {0}'}"
 							LineBreakMode="NoWrap"
 							Style="{DynamicResource ListItemDetailTextStyle}"
 							FontSize="13" />
@@ -53,7 +53,7 @@
 							<CollectionView.ItemTemplate>
 								<DataTemplate>
 									<StackLayout Padding="10" x:DataType="model:Member">
-										<Label Text="{Binding Given}" 
+										<Label Text="{Binding Given, StringFormat='- {0}'}" 
 											LineBreakMode="NoWrap" 
 											Style="{DynamicResource ListItemTextStyle}" 
 											FontSize="16" />

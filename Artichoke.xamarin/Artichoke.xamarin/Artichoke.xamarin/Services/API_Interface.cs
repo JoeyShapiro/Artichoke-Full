@@ -17,23 +17,23 @@ namespace Artichoke.xamarin.Services
 		public static string ApiAddress { get => api_address; set => api_address = value; }
 		public static string ApiPort { get => api_port; set => api_port = value; }
 
-        public static async Task<IEnumerable<Item>> GetItemsLeft()
+		public static async Task<IEnumerable<Item>> GetItemsLeft()
 		{
-            string url = "http://" + api_address + ":" + api_port + "/itemsleft";
+			string url = "http://" + api_address + ":" + api_port + "/itemsleft";
 
-            var values = new Dictionary<string, string>
-            {
-                { "family_id", "1" },
-                { "passphrase_hash", "sha256" },
-                { "given_id", "1" }
-            };
+			var values = new Dictionary<string, string>
+			{
+				{ "family_id", "1" },
+				{ "passphrase_hash", "sha256" },
+				{ "given_id", "1" }
+			};
 
-            string result = await apiPostRequest(url, values);
+			string result = await apiPostRequest(url, values);
 
-            var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
+			var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
 
-            return items;
-        }
+			return items;
+		}
 
 		public static async Task<Family> GetMyFamily()
 		{
@@ -51,6 +51,24 @@ namespace Artichoke.xamarin.Services
 			var family = JsonConvert.DeserializeObject<Family>(result);
 
 			return family;
+		}
+
+		public static async Task<IEnumerable<Item>> GetItemsCollected()
+		{
+			string url = "http://" + api_address + ":" + api_port + "/itemscollected";
+
+			var values = new Dictionary<string, string>
+			{
+				{ "family_id", "1" },
+				{ "passphrase_hash", "sha256" },
+				{ "given_id", "1" }
+			};
+
+			string result = await apiPostRequest(url, values);
+
+			var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
+
+			return items;
 		}
 
 		private static async Task<string> apiPostRequest(string url, Dictionary<string, string> keyValues)
