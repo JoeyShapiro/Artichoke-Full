@@ -2,6 +2,7 @@ from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import mysql.connector
 import time
+import sys
 
 app = Flask(__name__)
 api = Api(app)
@@ -11,7 +12,8 @@ db = mysql.connector.connect(
     user="admin",
     password="toor",
     port=3306,
-    database="artichoke"
+    database="artichoke",
+    autocommit=True # without this the api will only update locally and things act funny
 )
 
 cursor = db.cursor()
@@ -78,9 +80,10 @@ class ItemsLeft(Resource):
             'items': []
         }
 
-        cursor.execute("SELECT items.id, item, c.category FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=0", (family_ids[0], ))
+        cursor.execute("SELECT items.id, item, c.category FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=0 ORDER BY c.category", (family_ids[0], ))
         
         for row in cursor:
+            print(row, file=sys.stderr)
             item = {
                 'id': row[0],
                 'item': row[1],
@@ -123,8 +126,8 @@ class ItemsCollected(Resource):
             'items': []
         }
 
-        cursor.execute("SELECT items.id, item, c.category FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=1 ORDER BY modified_on LIMIT 10", (family_ids[0], ))
-        
+        cursor.execute("SELECT items.id, item, c.category FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=1 ORDER BY modified_on DESC LIMIT 10", (family_ids[0], ))
+
         for row in cursor:
             item = {
                 'id': row[0],
@@ -139,7 +142,7 @@ class ItemsCollected(Resource):
         # data = data.append(new_data, ignore_index=True)
         # # save back to CSV
         # data.to_csv('users.csv', index=False)
-        return data, 200  # return data with 200 OK
+        return data['items'], 200  # return data with 200 OK
     
     def get(self):
         print("get")
@@ -170,6 +173,9 @@ class ItemCollect(Resource):
         }
 
         cursor.execute("CALL item_collect(%s, %s, %s)", (family_ids[0], args['given_id'], args['item_id']))
+        for row in cursor:
+            print(row, file=sys.stderr)
+        # db.commit() # without this the api will only update locally and things act funny
         
         return data, 200
 

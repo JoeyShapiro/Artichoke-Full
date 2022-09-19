@@ -1,35 +1,32 @@
-﻿<Properties NuGet.AddPackagesDialog.IncludePrerelease="True" StartupConfiguration="{9DF86799-A907-436A-B982-6C38E8A6355F}|Default">
-  <Debugger.DebugSourceFolders>
-    <String>/Users/oniichan/Library/Caches/VisualStudio/17.0/Symbols/raw.githubusercontent.com/mono/mono/dffa5ab92245f2419238a35b7c2052e9a24036b4</String>
-  </Debugger.DebugSourceFolders>
+﻿<Properties StartupConfiguration="{9DF86799-A907-436A-B982-6C38E8A6355F}|Default" NuGet.AddPackagesDialog.IncludePrerelease="True">
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.Android PreferredExecutionTarget="Android.pixel_5_-_api_33" />
-  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.D8306490-81E2-429C-967C-C087E6158CDE" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Artichoke.xamarin/Artichoke.xamarin/ViewModels/BaseViewModel.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Artichoke.xamarin/Artichoke.xamarin/ViewModels/ItemsViewModel.cs">
     <Files>
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/ViewModelFamily.cs" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Models/Item.cs" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/ItemsPage.xaml" Line="8" Column="29" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/ItemsViewModel.cs" Line="34" Column="4" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/ItemsPage.xaml.cs" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Models/Item.cs" Line="14" Column="20" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/ItemsPage.xaml" Line="5" Column="28" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/ItemsViewModel.cs" Line="103" Column="49" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/ItemsPage.xaml.cs" Line="31" Column="29" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/ItemDetailViewModel.cs" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Services/MockDataStore.cs" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Services/IDataStore.cs" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Services/API_Interface.cs" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Services/API_Interface.cs" Line="88" Column="46" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/PageFamily.xaml.cs" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Models/Family.cs" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Models/Member.cs" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/PageFamily.xaml" Line="56" Column="63" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/PageFamily.xaml" Line="56" Column="59" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/LoginViewModel.cs" Line="1" Column="1" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/BaseViewModel.cs" Line="16" Column="13" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/BaseViewModel.cs" Line="18" Column="67" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/ItemDetailPage.xaml" Line="1" Column="1" />
-      <File FileName="Artichoke.xamarin/Artichoke.xamarin/AssemblyInfo.cs" Line="6" Column="1" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/AssemblyInfo.cs" Line="12" Column="7" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/NewItemViewModel.cs" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/ItemDetailPage.xaml.cs" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/LoginPage.xaml" Line="1" Column="1" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/Views/NewItemPage.xaml" />
       <File FileName="Artichoke.xamarin/Artichoke.xamarin/ViewModels/AboutViewModel.cs" Line="1" Column="1" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/AppShell.xaml" Line="1" Column="1" />
+      <File FileName="Artichoke.xamarin/Artichoke.xamarin/Models/ItemGroup.cs" Line="7" Column="3" />
+      <File FileName="../../../../Library/Caches/VisualStudio/17.0/Symbols/raw.githubusercontent.com/mono/mono/dffa5ab92245f2419238a35b7c2052e9a24036b4/mcs/class/corlib/System.Reflection/RuntimeMethodInfo.cs" Line="944" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -39,7 +36,7 @@
               <Node name="Models" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="ViewModels" expanded="True">
-                <Node name="BaseViewModel.cs" selected="True" />
+                <Node name="ItemsViewModel.cs" selected="True" />
               </Node>
               <Node name="Views" expanded="True">
                 <Node name="ItemsPage.xaml" expanded="True" />
@@ -51,12 +48,18 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.MonoDroid LastDeploySdkVersion="13.0.99.81" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/oniichan/Documents/Code/Artichoke/Artichoke.xamarin/Artichoke.xamarin/Artichoke.xamarin/Models/ObservableFamily.cs" relfile="Artichoke.xamarin/Artichoke.xamarin/Models/ObservableFamily.cs" line="34" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <Xamarin.Addins.Core.Project ActiveDebugTarget="Android.pixel_5_-_api_33" />
+  <Debugger.DebugSourceFolders>
+    <String>/Users/oniichan/Library/Caches/VisualStudio/17.0/Symbols/raw.githubusercontent.com/mono/mono/dffa5ab92245f2419238a35b7c2052e9a24036b4</String>
+  </Debugger.DebugSourceFolders>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.MonoDroid LastDeploySdkVersion="13.0.99.81" />
+  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.iOS PreferredExecutionTarget="MonoDevelop.IPhone.IPhoneSimulatorTarget.D8306490-81E2-429C-967C-C087E6158CDE" />
+  <MonoDevelop.Ide.ItemProperties.Artichoke.xamarin.Android PreferredExecutionTarget="Android.pixel_5_-_api_33" />
 </Properties>

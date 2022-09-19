@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Artichoke.xamarin.Models;
 using Artichoke.xamarin.Views;
 using Artichoke.xamarin.Services;
+using System.Linq;
 
 namespace Artichoke.xamarin.ViewModels
 {
@@ -15,7 +16,7 @@ namespace Artichoke.xamarin.ViewModels
 	{
 		private Item _selectedItem;
 
-		public ObservableCollection<Item> Items { get; }
+		public ObservableCollection<ItemGroup> Items { get; }
 		public Command LoadItemsCommand { get; }
 		public Command AddItemCommand { get;  }
 		public Command<Item> ItemTapped { get; }
@@ -24,7 +25,7 @@ namespace Artichoke.xamarin.ViewModels
 		public ItemsViewModel()
 		{
 			Title = "Browse";
-			Items = new ObservableCollection<Item>();
+			Items = new ObservableCollection<ItemGroup>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
 			ItemTapped = new Command<Item>(OnItemSelected);
@@ -40,11 +41,14 @@ namespace Artichoke.xamarin.ViewModels
 			try
 			{
 				Items.Clear();
-				var items = await API_Interface.GetItemsLeft();
-				foreach (var item in items)
-				{
-					Items.Add(item);
-				}
+				var items_left = await API_Interface.GetItemsLeft();
+				var items_collected = await API_Interface.GetItemsCollected();
+				//foreach (var item in items)
+				//{
+				//	Items.Add(item);
+				//}
+				Items.Add(new ItemGroup("To Collect", items_left.ToList()));
+				Items.Add(new ItemGroup("Recently Collected", items_collected.ToList()));
 			}
 			catch (Exception ex)
 			{
@@ -91,8 +95,15 @@ namespace Artichoke.xamarin.ViewModels
 			if (item == null)
 				return;
 
-			//await API_Interface
-			await ExecuteLoadItemsCommand();
+			bool success = await API_Interface.ItemCollect(item);
+			if (success)
+				await ExecuteLoadItemsCommand();
+			else
+			{
+                await ExecuteLoadItemsCommand();
+            }
+
+
 		}
 	}
 }

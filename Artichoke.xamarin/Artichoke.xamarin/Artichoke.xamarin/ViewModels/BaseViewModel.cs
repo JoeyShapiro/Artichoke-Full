@@ -13,7 +13,12 @@ namespace Artichoke.xamarin.ViewModels
 {
 	public class BaseViewModel : INotifyPropertyChanged
 	{
-        public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+		public IDataStore<Item> DataStore => DependencyService.Get<IDataStore<Item>>();
+
+		public static string ColorPrimary { get { return "Red"; } set { ; } }
+		public static string ColorSecondary = "Green";
+		public static string ColorTertiary = "LightGreen";
+		public static string ColorAccent = "LightBlue";
 
 		bool isBusy = false;
 		public bool IsBusy

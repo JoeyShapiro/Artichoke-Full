@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Json;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Artichoke.xamarin.Services
 {
@@ -31,8 +32,9 @@ namespace Artichoke.xamarin.Services
 			string result = await apiPostRequest(url, values);
 
 			var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
+            items.ToList().ForEach(item => item.IsNotCollected = true);
 
-			return items;
+            return items;
 		}
 
 		public static async Task<Family> GetMyFamily()
@@ -69,6 +71,28 @@ namespace Artichoke.xamarin.Services
 			var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
 
 			return items;
+		}
+
+		public static async Task<bool> ItemCollect(Item item)
+		{
+            string url = "http://" + api_address + ":" + api_port + "/itemcollect";
+
+            var values = new Dictionary<string, string>
+            {
+                { "family_id", "1" },
+                { "passphrase_hash", "sha256" },
+                { "given_id", "1" },
+				{ "item_id", item.Id }
+            };
+
+            string result = await apiPostRequest(url, values);
+
+            if (result != "\"message\": \"success\"")
+			{
+				return false;
+			}
+
+            return true;
 		}
 
 		private static async Task<string> apiPostRequest(string url, Dictionary<string, string> keyValues)

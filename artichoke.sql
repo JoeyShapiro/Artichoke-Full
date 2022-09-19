@@ -50,7 +50,7 @@ create table logs
     id        int auto_increment,
     family_id int                                         not null,
     user_id   int                                         not null,
-    action    enum ('add', 'remove', 'modify', 'collect') not null,
+    action    enum ('add', 'remove', 'modify', 'collected') not null,
     item_id   int                                         not null,
     constraint logs_pk
         primary key (id)
@@ -117,7 +117,7 @@ CREATE PROCEDURE item_collect (IN given_family_id int, IN given_user_id int, IN 
         WHERE t.id = given_item_id;
 
         INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
-            VALUES (given_family_id, given_user_id, 'collect', @current_item_id, @now_time);
+            VALUES (given_family_id, given_user_id, 'collect', given_item_id, @now_time);
     END //
 
 -- remove item
@@ -131,7 +131,7 @@ CREATE PROCEDURE item_remove (IN given_family_id int, IN given_user_id int, IN g
         WHERE id = given_item_id;
 
         INSERT INTO artichoke.logs (family_id, user_id, action, item_id, modified_on)
-            VALUES (given_family_id, given_user_id, 'remove', @current_item_id, @now_time);
+            VALUES (given_family_id, given_user_id, 'remove', given_item_id, @now_time);
     END //
 
 -- dummy data

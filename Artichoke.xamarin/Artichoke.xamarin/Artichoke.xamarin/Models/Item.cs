@@ -11,5 +11,6 @@ namespace Artichoke.xamarin.Models
         public string Name { get; set; }
         [JsonProperty("category")]
         public string Category { get; set; }
+        public bool IsNotCollected { get; set; } //? this is for the swipeview
     }
 }
