@@ -55,6 +55,24 @@ namespace Artichoke.xamarin.Services
 			return family;
 		}
 
+		public static async Task<IEnumerable<Category>> GetCategories()
+		{
+            string url = "http://" + api_address + ":" + api_port + "/categories";
+
+            var values = new Dictionary<string, string>
+            {
+                { "family_id", "1" },
+                { "passphrase_hash", "sha256" },
+                { "given_id", "1" }
+            };
+
+            string result = await apiPostRequest(url, values);
+
+            var categories = JsonConvert.DeserializeObject<IEnumerable<Category>>(result);
+
+            return categories;
+        }
+
 		public static async Task<IEnumerable<Item>> GetItemsCollected()
 		{
 			string url = "http://" + api_address + ":" + api_port + "/itemscollected";
@@ -94,6 +112,30 @@ namespace Artichoke.xamarin.Services
 
             return true;
 		}
+
+		public static async Task<bool> ItemAdd(Item item)
+		{
+			string url = "http://" + api_address + ":" + api_port + "/itemadd";
+
+            var values = new Dictionary<string, string>
+            {
+                { "family_id", "1" },
+                { "passphrase_hash", "sha256" },
+                { "given_id", "1" },
+                { "item_name", item.Name },
+				{ "item_category_id", item.Category },
+				{ "item_desc", item.Desc }
+			};
+
+            string result = await apiPostRequest(url, values);
+
+            if (result != "\"message\": \"success\"")
+            {
+                return false;
+            }
+
+            return true;
+        }
 
 		private static async Task<string> apiPostRequest(string url, Dictionary<string, string> keyValues)
 		{

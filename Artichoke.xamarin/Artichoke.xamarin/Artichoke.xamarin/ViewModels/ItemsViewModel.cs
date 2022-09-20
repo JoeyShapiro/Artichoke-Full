@@ -9,6 +9,7 @@ using Artichoke.xamarin.Models;
 using Artichoke.xamarin.Views;
 using Artichoke.xamarin.Services;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Artichoke.xamarin.ViewModels
 {
@@ -17,6 +18,7 @@ namespace Artichoke.xamarin.ViewModels
 		private Item _selectedItem;
 
 		public ObservableCollection<ItemGroup> Items { get; }
+		public ObservableCollection<string> Categories { get; }
 		public Command LoadItemsCommand { get; }
 		public Command AddItemCommand { get;  }
 		public Command<Item> ItemTapped { get; }
@@ -25,7 +27,9 @@ namespace Artichoke.xamarin.ViewModels
 		public ItemsViewModel()
 		{
 			Title = "Browse";
+
 			Items = new ObservableCollection<ItemGroup>();
+			Categories = new ObservableCollection<string>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
 			ItemTapped = new Command<Item>(OnItemSelected);
@@ -41,13 +45,26 @@ namespace Artichoke.xamarin.ViewModels
 			try
 			{
 				Items.Clear();
+				Categories.Clear();
+
+				var categories = await API_Interface.GetCategories();
 				var items_left = await API_Interface.GetItemsLeft();
 				var items_collected = await API_Interface.GetItemsCollected();
-				//foreach (var item in items)
-				//{
-				//	Items.Add(item);
-				//}
-				Items.Add(new ItemGroup("To Collect", items_left.ToList()));
+
+				var itemGroupsLeft = new Dictionary<string, ItemGroup>();
+				foreach(var category in categories)
+				{
+					itemGroupsLeft.Add(category.Name, new ItemGroup(category.Name, new List<Item>()));
+					Categories.Add(category.Name);
+				}
+
+				foreach(var item in items_left)
+				{
+					itemGroupsLeft[item.Category].Add(item);
+				}
+
+				foreach(var itemGroup in itemGroupsLeft)
+					Items.Add(itemGroup.Value);
 				Items.Add(new ItemGroup("Recently Collected", items_collected.ToList()));
 			}
 			catch (Exception ex)
@@ -78,8 +95,9 @@ namespace Artichoke.xamarin.ViewModels
 
 		private async void OnAddItem(object obj)
 		{
-			await Shell.Current.GoToAsync(nameof(NewItemPage));
-		}
+			//await API_Interface.ItemAdd();
+            //await Shell.Current.GoToAsync(nameof(NewItemPage));
+        }
 
 		async void OnItemSelected(Item item)
 		{
@@ -100,10 +118,19 @@ namespace Artichoke.xamarin.ViewModels
 				await ExecuteLoadItemsCommand();
 			else
 			{
-                await ExecuteLoadItemsCommand();
-            }
+				await ExecuteLoadItemsCommand();
+			}
 
 
+		}
+
+		public async Task<bool> AddItem(Item item)
+		{
+			bool isSuccess = await API_Interface.ItemAdd(item);
+			
+			await ExecuteLoadItemsCommand();
+
+			return isSuccess;
 		}
 	}
 }

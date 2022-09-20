@@ -30,5 +30,48 @@ namespace Artichoke.xamarin.Views
 			base.OnAppearing();
 			_viewModel.OnAppearing();
 		}
+
+		async void ToggleAdd_Clicked(System.Object sender, System.EventArgs e)
+		{
+			if (!addDiv.IsVisible)
+			{
+				await addDiv.TranslateTo(App.Current.MainPage.Width, 0, 0);
+				addDiv.IsVisible = true;
+				await addDiv.TranslateTo(0, 0, 200);
+				addButton.Text = "Cancel";
+			}
+			else
+			{
+				await addDiv.TranslateTo(App.Current.MainPage.Width, 0, 200);
+				addDiv.IsVisible = false;
+				addButton.Text = "Add";
+			}
+		}
+
+		async void addSave_Clicked(System.Object sender, System.EventArgs e)
+		{
+			if (addPicker.SelectedIndex < 0)
+				return;
+
+			string name = addEntry.Text;
+			string desc = addDesc.Text;
+			string category = addPicker.Items[addPicker.SelectedIndex];
+
+			if (name == string.Empty || desc == string.Empty || category == string.Empty)
+				return;
+
+			Item item = new Item { Name = name, Desc = desc, Category = category };
+
+			bool isSuccess = await _viewModel.AddItem(item);
+
+			if (!isSuccess)
+				await DisplayAlert("Error", "Could not add item", "ok");
+			else
+			{
+				addEntry.Text = string.Empty;
+				addDesc.Text = string.Empty;
+				addPicker.SelectedIndex = -1;
+			}
+		}
 	}
 }
