@@ -47,11 +47,17 @@ namespace Artichoke.xamarin.ViewModels
 				Items.Clear();
 				Categories.Clear();
 
-				var categories = await API_Interface.GetCategories();
-				var items_left = await API_Interface.GetItemsLeft();
-				var items_collected = await API_Interface.GetItemsCollected();
+				(var categories, Exception err) = await API_Interface.GetCategories();
+				if (err != null)
+                    await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok"); //TODO should this also return
+                (var items_left, Exception err2) = await API_Interface.GetItemsLeft();
+                if (err2 != null)
+                    await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
+                (var items_collected, Exception err3) = await API_Interface.GetItemsCollected();
+                if (err3 != null)
+                    await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
 
-				var itemGroupsLeft = new Dictionary<string, ItemGroup>();
+                var itemGroupsLeft = new Dictionary<string, ItemGroup>();
 				foreach(var category in categories)
 				{
 					itemGroupsLeft.Add(category.Name, new ItemGroup(category.Name, new List<Item>()));
@@ -70,7 +76,8 @@ namespace Artichoke.xamarin.ViewModels
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex);
-			}
+                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "ok");
+            }
 			finally
 			{
 				IsBusy = false;
@@ -113,24 +120,25 @@ namespace Artichoke.xamarin.ViewModels
 			if (item == null)
 				return;
 
-			bool success = await API_Interface.ItemCollect(item);
-			if (success)
-				await ExecuteLoadItemsCommand();
-			else
+			Exception err = await API_Interface.ItemCollect(item);
+			if (err != null)
 			{
 				await ExecuteLoadItemsCommand();
+				await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
 			}
+			else
+				await ExecuteLoadItemsCommand();
 
 
 		}
 
-		public async Task<bool> AddItem(Item item)
+		public async Task<Exception> AddItem(Item item)
 		{
-			bool isSuccess = await API_Interface.ItemAdd(item);
-			
-			await ExecuteLoadItemsCommand();
+			Exception err = await API_Interface.ItemAdd(item);
 
-			return isSuccess;
+            await ExecuteLoadItemsCommand();
+
+			return err; // this will print error after
 		}
 	}
 }

@@ -62,10 +62,10 @@ namespace Artichoke.xamarin.Views
 
 			Item item = new Item { Name = name, Desc = desc, Category = category };
 
-			bool isSuccess = await _viewModel.AddItem(item);
+			Exception err = await _viewModel.AddItem(item);
 
-			if (!isSuccess)
-				await DisplayAlert("Error", "Could not add item", "ok");
+			if (err != null)
+				await DisplayAlert("Error", err.Message, "ok");
 			else
 			{
 				addEntry.Text = string.Empty;

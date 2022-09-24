@@ -179,9 +179,45 @@ class ItemCollect(Resource):
         
         return data, 200
 
+class GetCategories(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()  # initialize
+        
+        parser.add_argument('family_id', required=True)  # add args
+        parser.add_argument('passphrase_hash', required=True)
+        parser.add_argument('given_id', required=True)
+        parser.add_argument('item_id', required=True)
+        
+        args = parser.parse_args()  # parse arguments to dictionary
+
+        cursor.execute("SELECT id FROM families WHERE id=%s AND passphrase_hash=%s", ( args['family_id'], args['passphrase_hash'] ))
+
+        family_ids = []
+        for row in cursor:
+            family_ids.append(row[0])
+        
+        if len(family_ids) != 1:
+            return {}, 401
+
+        data = {
+            'categories' : []
+        }
+
+        cursor.execute("CALL get_categories(%s)", (family_ids[0], ))
+        for row in cursor:
+            print(row, file=sys.stderr)
+            category = {
+                'id' : row[0],
+                'name' : row[1]
+            }
+            data['categories'].append(category)
+        
+        return data['categories'], 200
+
 api.add_resource(ItemsLeft, '/itemsleft')  # '/users' is our entry point
 api.add_resource(ItemsCollected, '/itemscollected')
 api.add_resource(MyFamily, '/myfamily')
+api.add_resource(GetCategories, '/getcategories')
 
 api.add_resource(ItemCollect, '/itemcollect')
 

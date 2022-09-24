@@ -134,6 +134,14 @@ CREATE PROCEDURE item_remove (IN given_family_id int, IN given_user_id int, IN g
             VALUES (given_family_id, given_user_id, 'remove', given_item_id, @now_time);
     END //
 
+-- get categories of a family
+DELIMITER //
+CREATE PROCEDURE get_categories (IN given_family_id int)
+    BEGIN
+        SELECT id, category FROM categories 
+        WHERE family_id=given_family_id;
+    END //
+
 -- dummy data
 -- families
 INSERT INTO artichoke.families (family_name, passphrase_hash, sub_expires_on)

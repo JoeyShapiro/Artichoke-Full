@@ -18,7 +18,7 @@ namespace Artichoke.xamarin.Services
 		public static string ApiAddress { get => api_address; set => api_address = value; }
 		public static string ApiPort { get => api_port; set => api_port = value; }
 
-		public static async Task<IEnumerable<Item>> GetItemsLeft()
+		public static async Task<(IEnumerable<Item>, Exception)> GetItemsLeft()
 		{
 			string url = "http://" + api_address + ":" + api_port + "/itemsleft";
 
@@ -29,15 +29,17 @@ namespace Artichoke.xamarin.Services
 				{ "given_id", "1" }
 			};
 
-			string result = await apiPostRequest(url, values);
+			(string result, Exception err) = await apiPostRequest(url, values);
+			if (err != null)
+				return (null, err);
 
 			var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
-            items.ToList().ForEach(item => item.IsNotCollected = true);
+			items.ToList().ForEach(item => item.IsNotCollected = true);
 
-            return items;
+			return (items, null);
 		}
 
-		public static async Task<Family> GetMyFamily()
+		public static async Task<(Family, Exception)> GetMyFamily()
 		{
 			string url = "http://" + api_address + ":" + api_port + "/myfamily";
 
@@ -48,32 +50,36 @@ namespace Artichoke.xamarin.Services
 				{ "given_id", "1" }
 			};
 
-			string result = await apiPostRequest(url, values);
+			(string result, Exception err) = await apiPostRequest(url, values);
+			if (err != null)
+				return (null, err);
 
 			var family = JsonConvert.DeserializeObject<Family>(result);
 
-			return family;
+			return (family, null);
 		}
 
-		public static async Task<IEnumerable<Category>> GetCategories()
+		public static async Task<(IEnumerable<Category>, Exception)> GetCategories()
 		{
-            string url = "http://" + api_address + ":" + api_port + "/categories";
+			string url = "http://" + api_address + ":" + api_port + "/categories";
 
-            var values = new Dictionary<string, string>
-            {
-                { "family_id", "1" },
-                { "passphrase_hash", "sha256" },
-                { "given_id", "1" }
-            };
+			var values = new Dictionary<string, string>
+			{
+				{ "family_id", "1" },
+				{ "passphrase_hash", "sha256" },
+				{ "given_id", "1" }
+			};
 
-            string result = await apiPostRequest(url, values);
+			(string result, Exception err) = await apiPostRequest(url, values);
+			if (err != null)
+				return (null, err);
 
-            var categories = JsonConvert.DeserializeObject<IEnumerable<Category>>(result);
+			var categories = JsonConvert.DeserializeObject<IEnumerable<Category>>(result);
 
-            return categories;
-        }
+			return (categories, null);
+		}
 
-		public static async Task<IEnumerable<Item>> GetItemsCollected()
+		public static async Task<(IEnumerable<Item>, Exception)> GetItemsCollected()
 		{
 			string url = "http://" + api_address + ":" + api_port + "/itemscollected";
 
@@ -84,62 +90,59 @@ namespace Artichoke.xamarin.Services
 				{ "given_id", "1" }
 			};
 
-			string result = await apiPostRequest(url, values);
+			(string result, Exception err) = await apiPostRequest(url, values);
+			if (err != null)
+				return (null, err);
 
 			var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
 
-			return items;
+			return (items, null);
 		}
 
-		public static async Task<bool> ItemCollect(Item item)
+		public static async Task<Exception> ItemCollect(Item item)
 		{
-            string url = "http://" + api_address + ":" + api_port + "/itemcollect";
+			string url = "http://" + api_address + ":" + api_port + "/itemcollect";
 
-            var values = new Dictionary<string, string>
-            {
-                { "family_id", "1" },
-                { "passphrase_hash", "sha256" },
-                { "given_id", "1" },
-				{ "item_id", item.Id }
-            };
-
-            string result = await apiPostRequest(url, values);
-
-            if (result != "\"message\": \"success\"")
+			var values = new Dictionary<string, string>
 			{
-				return false;
-			}
+				{ "family_id", "1" },
+				{ "passphrase_hash", "sha256" },
+				{ "given_id", "1" },
+				{ "item_id", item.Id }
+			};
 
-            return true;
+			(string result, Exception err) = await apiPostRequest(url, values);
+
+			// maybe do something with result
+
+			return err;
 		}
 
-		public static async Task<bool> ItemAdd(Item item)
+		public static async Task<Exception> ItemAdd(Item item)
 		{
 			string url = "http://" + api_address + ":" + api_port + "/itemadd";
 
-            var values = new Dictionary<string, string>
-            {
-                { "family_id", "1" },
-                { "passphrase_hash", "sha256" },
-                { "given_id", "1" },
-                { "item_name", item.Name },
+			var values = new Dictionary<string, string>
+			{
+				{ "family_id", "1" },
+				{ "passphrase_hash", "sha256" },
+				{ "given_id", "1" },
+				{ "item_name", item.Name },
 				{ "item_category_id", item.Category },
 				{ "item_desc", item.Desc }
 			};
 
-            string result = await apiPostRequest(url, values);
+			(string result, Exception err)= await apiPostRequest(url, values);
+			if (err != null)
+				return err;
 
-            if (result != "\"message\": \"success\"")
-            {
-                return false;
-            }
+			return null;
+		}
 
-            return true;
-        }
-
-		private static async Task<string> apiPostRequest(string url, Dictionary<string, string> keyValues)
+		// generic api post request
+		private static async Task<(string, Exception)> apiPostRequest(string url, Dictionary<string, string> keyValues)
 		{
-			string content = string.Empty;
+			string content;
 			HttpClient client = new HttpClient();
 			Uri uri = new Uri(url);
 
@@ -152,15 +155,17 @@ namespace Artichoke.xamarin.Services
 				}
 				else
 				{
-					content = "no";
+					Exception err = new Exception(response.Content.ReadAsStringAsync().Result);
+					return ("", err);
 				}
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(@"\tERROR {0}", ex.Message);
+				return ("", ex);
 			}
 
-			return content;
+			return (content, null);
 		}
 	}
 }
