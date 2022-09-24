@@ -186,7 +186,6 @@ class GetCategories(Resource):
         parser.add_argument('family_id', required=True)  # add args
         parser.add_argument('passphrase_hash', required=True)
         parser.add_argument('given_id', required=True)
-        parser.add_argument('item_id', required=True)
         
         args = parser.parse_args()  # parse arguments to dictionary
 
@@ -194,6 +193,7 @@ class GetCategories(Resource):
 
         family_ids = []
         for row in cursor:
+            print(row, file=sys.stderr)
             family_ids.append(row[0])
         
         if len(family_ids) != 1:
@@ -203,14 +203,17 @@ class GetCategories(Resource):
             'categories' : []
         }
 
-        cursor.execute("CALL get_categories(%s)", (family_ids[0], ))
-        for row in cursor:
-            print(row, file=sys.stderr)
-            category = {
-                'id' : row[0],
-                'name' : row[1]
-            }
-            data['categories'].append(category)
+        # cursor.execute("CALL get_categories(%s)", (family_ids[0], ), multi=True)
+        cursor.callproc("get_categories", (family_ids[0], ))
+        print('categories', file=sys.stderr)
+        for results in cursor.stored_results():
+            for row in results.fetchall():
+                print(row, file=sys.stderr)
+                category = {
+                    'id' : row[0],
+                    'name' : row[1]
+                }
+                data['categories'].append(category)
         
         return data['categories'], 200
 

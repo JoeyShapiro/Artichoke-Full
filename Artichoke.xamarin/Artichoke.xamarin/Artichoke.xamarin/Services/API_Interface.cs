@@ -61,7 +61,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<(IEnumerable<Category>, Exception)> GetCategories()
 		{
-			string url = "http://" + api_address + ":" + api_port + "/categories";
+			string url = "http://" + api_address + ":" + api_port + "/getcategories";
 
 			var values = new Dictionary<string, string>
 			{

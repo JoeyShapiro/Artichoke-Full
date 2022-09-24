@@ -70,7 +70,8 @@ namespace Artichoke.xamarin.ViewModels
 				}
 
 				foreach(var itemGroup in itemGroupsLeft)
-					Items.Add(itemGroup.Value);
+					if (itemGroup.Value.Count > 0)
+						Items.Add(itemGroup.Value);
 				Items.Add(new ItemGroup("Recently Collected", items_collected.ToList()));
 			}
 			catch (Exception ex)
