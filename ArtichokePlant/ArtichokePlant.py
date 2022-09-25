@@ -1,3 +1,4 @@
+import json
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 import mysql.connector
@@ -217,9 +218,51 @@ class GetCategories(Resource):
         
         return data['categories'], 200
 
+class GetLogs(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()  # initialize
+        
+        parser.add_argument('family_id', required=True)  # add args
+        parser.add_argument('passphrase_hash', required=True)
+        parser.add_argument('given_id', required=True)
+        
+        args = parser.parse_args()  # parse arguments to dictionary
+
+        cursor.execute("SELECT id FROM families WHERE id=%s AND passphrase_hash=%s", ( args['family_id'], args['passphrase_hash'] ))
+
+        family_ids = []
+        for row in cursor:
+            print(row, file=sys.stderr)
+            family_ids.append(row[0])
+        
+        if len(family_ids) != 1:
+            return {}, 401
+
+        data = {
+            'logs' : []
+        }
+
+        # cursor.execute("CALL get_categories(%s)", (family_ids[0], ), multi=True)
+        cursor.callproc("get_family_logs", (family_ids[0], ))
+        print('logs', file=sys.stderr)
+        for results in cursor.stored_results():
+            for row in results.fetchall():
+                print(row, file=sys.stderr)
+                log = {
+                    'id' : row[0],
+                    'username' : row[1],
+                    'action' : row[2],
+                    'item': row[3],
+                    'modified_on': json.dumps(row[4], default=str)
+                }
+                data['logs'].append(log)
+        
+        return data['logs'], 200
+
 api.add_resource(ItemsLeft, '/itemsleft')  # '/users' is our entry point
 api.add_resource(ItemsCollected, '/itemscollected')
 api.add_resource(MyFamily, '/myfamily')
+api.add_resource(GetLogs, '/getfamilylogs')
 api.add_resource(GetCategories, '/getcategories')
 
 api.add_resource(ItemCollect, '/itemcollect')

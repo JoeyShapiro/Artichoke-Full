@@ -12,7 +12,7 @@ namespace Artichoke.xamarin.Services
 {
 	public static class API_Interface
 	{
-		private static string api_address = "10.0.2.2";
+		private static string api_address = "10.0.2.2"; // maybe move these to account
 		private static string api_port = "6060";
 
 		public static string ApiAddress { get => api_address; set => api_address = value; }
@@ -58,6 +58,26 @@ namespace Artichoke.xamarin.Services
 
 			return (family, null);
 		}
+
+		public static async Task<(IEnumerable<Log>, Exception)> GetFamilyLogs()
+		{
+            string url = "http://" + api_address + ":" + api_port + "/getfamilylogs";
+
+            var values = new Dictionary<string, string>
+            {
+                { "family_id", "1" },
+                { "passphrase_hash", "sha256" },
+                { "given_id", "1" }
+            };
+
+            (string result, Exception err) = await apiPostRequest(url, values);
+            if (err != null)
+                return (null, err);
+
+			var logs = JsonConvert.DeserializeObject<IEnumerable<Log>>(result);
+
+			return (logs, null);
+        }
 
 		public static async Task<(IEnumerable<Category>, Exception)> GetCategories()
 		{

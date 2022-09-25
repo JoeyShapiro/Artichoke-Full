@@ -37,7 +37,7 @@ namespace Artichoke.xamarin.ViewModels
 			{
 				(var myFamily, Exception err) = await API_Interface.GetMyFamily();
 				if (err != null)
-                    await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
+					await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
 
 				myFamily.SubExpiration = DateTimeOffset.FromUnixTimeSeconds(long.Parse(myFamily.SubExpirationUnix)).UtcDateTime.ToString("U"); //MMM d, yyyy @ T
 				MyFamily.Add(myFamily);
@@ -45,8 +45,8 @@ namespace Artichoke.xamarin.ViewModels
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex);
-                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "ok");
-            }
+				await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "ok");
+			}
 			finally
 			{
 				IsBusy = false;

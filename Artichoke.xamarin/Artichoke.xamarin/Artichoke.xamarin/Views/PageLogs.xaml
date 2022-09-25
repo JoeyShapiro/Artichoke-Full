@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage
+	xmlns="http://xamarin.com/schemas/2014/forms"
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	x:Class="Artichoke.xamarin.Views.PageLogs"
+	Title="{Binding Title}"
+	xmlns:local="clr-namespace:Artichoke.xamarin.ViewModels"  
+	xmlns:model="clr-namespace:Artichoke.xamarin.Models">
+
+	<RefreshView x:DataType="local:ViewModelLogs" Command="{Binding LoadLogsCommand}" IsRefreshing="{Binding IsBusy, Mode=TwoWay}">
+		<!-- family -->
+		<CollectionView x:Name="LogsListView"
+				  ItemsSource="{Binding Logs}"
+				  SelectionMode="None">
+			<CollectionView.ItemTemplate>
+				<DataTemplate>
+					<StackLayout Padding="10" x:DataType="model:Log">
+						<Label Text="{Binding Formatted_Log}" />
+					</StackLayout>
+				</DataTemplate>
+			</CollectionView.ItemTemplate>
+		</CollectionView>
+	</RefreshView>
+</ContentPage>
+

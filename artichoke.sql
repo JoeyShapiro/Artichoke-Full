@@ -142,6 +142,17 @@ CREATE PROCEDURE get_categories (IN given_family_id int)
         WHERE family_id=given_family_id;
     END //
 
+-- get logs of a family
+DELIMITER //
+CREATE PROCEDURE get_family_logs (IN given_family_id int)
+    BEGIN
+        SELECT logs.id, u.username, logs.action, i.item, logs.modified_on FROM logs
+            INNER JOIN users u on logs.user_id = u.id
+            INNER JOIN items i on logs.item_id = i.id
+            WHERE logs.family_id=given_family_id
+            ORDER BY modified_on DESC;
+    END //
+
 -- dummy data
 -- families
 INSERT INTO artichoke.families (family_name, passphrase_hash, sub_expires_on)

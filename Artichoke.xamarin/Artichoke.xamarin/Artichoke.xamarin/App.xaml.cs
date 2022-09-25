@@ -3,6 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Artichoke.xamarin.Services;
 using Artichoke.xamarin.Views;
+using Artichoke.xamarin.Models;
 
 namespace Artichoke.xamarin
 {
@@ -14,6 +15,7 @@ namespace Artichoke.xamarin
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
+            Account.Load();
             MainPage = new AppShell();
         }
 
