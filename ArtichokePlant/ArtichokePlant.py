@@ -316,4 +316,4 @@ api.add_resource(ItemCollect, '/itemcollect')
 api.add_resource(ItemAdd, '/itemadd')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')  # run our Flask app
+    app.run(host='0.0.0.0', ssl_context=('keys/server.crt','keys/server.key'))  # run our Flask app

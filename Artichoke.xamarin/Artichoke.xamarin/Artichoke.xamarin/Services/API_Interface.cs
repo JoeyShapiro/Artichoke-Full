@@ -7,12 +7,15 @@ using System.Net.Http;
 using System.Net.Http.Json;
 using Newtonsoft.Json;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace Artichoke.xamarin.Services
 {
 	public static class API_Interface
 	{
-		private static string api_address = "10.0.2.2"; // maybe move these to account
+		public static string api_address =
+			DeviceInfo.Platform == DevicePlatform.Android ? "10.0.2.2" : "localhost";
+		//private static string api_address = "10.0.2.2"; // maybe move these to account
 		private static string api_port = "6060";
 
 		public static string ApiAddress { get => api_address; set => api_address = value; }
@@ -20,7 +23,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<(IEnumerable<Item>, Exception)> GetItemsLeft()
 		{
-			string url = "http://" + api_address + ":" + api_port + "/itemsleft";
+			string url = "https://" + api_address + ":" + api_port + "/itemsleft";
 
 			var values = new Dictionary<string, string>
 			{
@@ -41,7 +44,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<(Family, Exception)> GetMyFamily()
 		{
-			string url = "http://" + api_address + ":" + api_port + "/myfamily";
+			string url = "https://" + api_address + ":" + api_port + "/myfamily";
 
 			var values = new Dictionary<string, string>
 			{
@@ -61,7 +64,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<(IEnumerable<Log>, Exception)> GetFamilyLogs()
 		{
-			string url = "http://" + api_address + ":" + api_port + "/getfamilylogs";
+			string url = "https://" + api_address + ":" + api_port + "/getfamilylogs";
 
 			var values = new Dictionary<string, string>
 			{
@@ -81,7 +84,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<(IEnumerable<Category>, Exception)> GetCategories()
 		{
-			string url = "http://" + api_address + ":" + api_port + "/getcategories";
+			string url = "https://" + api_address + ":" + api_port + "/getcategories";
 
 			var values = new Dictionary<string, string>
 			{
@@ -101,7 +104,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<(IEnumerable<Item>, Exception)> GetItemsCollected()
 		{
-			string url = "http://" + api_address + ":" + api_port + "/itemscollected";
+			string url = "https://" + api_address + ":" + api_port + "/itemscollected";
 
 			var values = new Dictionary<string, string>
 			{
@@ -121,7 +124,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<Exception> ItemCollect(Item item)
 		{
-			string url = "http://" + api_address + ":" + api_port + "/itemcollect";
+			string url = "https://" + api_address + ":" + api_port + "/itemcollect";
 
 			var values = new Dictionary<string, string>
 			{
@@ -140,7 +143,7 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<Exception> ItemAdd(Item item, int category_id)
 		{
-			string url = "http://" + api_address + ":" + api_port + "/itemadd";
+			string url = "https://" + api_address + ":" + api_port + "/itemadd";
 
 			var values = new Dictionary<string, string>
 			{
@@ -163,7 +166,7 @@ namespace Artichoke.xamarin.Services
 		private static async Task<(string, Exception)> apiPostRequest(string url, Dictionary<string, string> keyValues)
 		{
 			string content;
-			HttpClient client = new HttpClient();
+			HttpClient client = new HttpClient(GetInsecureHandler());
 			Uri uri = new Uri(url);
 
 			try
@@ -186,6 +189,20 @@ namespace Artichoke.xamarin.Services
 			}
 
 			return (content, null);
+		}
+
+		// This method must be in a class in a platform project, even if
+		// the HttpClient object is constructed in a shared project.
+		public static HttpClientHandler GetInsecureHandler()
+		{
+			HttpClientHandler handler = new HttpClientHandler();
+			handler.ServerCertificateCustomValidationCallback = (message, cert, chain, errors) =>
+			{
+				if (cert.Issuer.Equals("O=Internet Widgits Pty Ltd, S=Some-State, C=AU"))
+					return true;
+				return errors == System.Net.Security.SslPolicyErrors.None;
+			};
+			return handler;
 		}
 	}
 }
