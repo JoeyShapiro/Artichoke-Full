@@ -61,23 +61,23 @@ namespace Artichoke.xamarin.Services
 
 		public static async Task<(IEnumerable<Log>, Exception)> GetFamilyLogs()
 		{
-            string url = "http://" + api_address + ":" + api_port + "/getfamilylogs";
+			string url = "http://" + api_address + ":" + api_port + "/getfamilylogs";
 
-            var values = new Dictionary<string, string>
-            {
-                { "family_id", "1" },
-                { "passphrase_hash", "sha256" },
-                { "given_id", "1" }
-            };
+			var values = new Dictionary<string, string>
+			{
+				{ "family_id", "1" },
+				{ "passphrase_hash", "sha256" },
+				{ "given_id", "1" }
+			};
 
-            (string result, Exception err) = await apiPostRequest(url, values);
-            if (err != null)
-                return (null, err);
+			(string result, Exception err) = await apiPostRequest(url, values);
+			if (err != null)
+				return (null, err);
 
 			var logs = JsonConvert.DeserializeObject<IEnumerable<Log>>(result);
 
 			return (logs, null);
-        }
+		}
 
 		public static async Task<(IEnumerable<Category>, Exception)> GetCategories()
 		{
@@ -138,7 +138,7 @@ namespace Artichoke.xamarin.Services
 			return err;
 		}
 
-		public static async Task<Exception> ItemAdd(Item item)
+		public static async Task<Exception> ItemAdd(Item item, int category_id)
 		{
 			string url = "http://" + api_address + ":" + api_port + "/itemadd";
 
@@ -148,7 +148,7 @@ namespace Artichoke.xamarin.Services
 				{ "passphrase_hash", "sha256" },
 				{ "given_id", "1" },
 				{ "item_name", item.Name },
-				{ "item_category_id", item.Category },
+				{ "item_category_id", category_id.ToString() },
 				{ "item_desc", item.Desc }
 			};
 

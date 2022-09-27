@@ -20,7 +20,7 @@ db = mysql.connector.connect(
 cursor = db.cursor()
 cursor.execute("SELECT sub_expires_on FROM families WHERE family_name='Shapiro' AND passphrase_hash='sha256'")
 
-for x in cursor:
+for (x) in cursor:
     print(time.ctime(x[0]))
     if time.time() < int(x[0]):
         print('valid')
@@ -60,6 +60,8 @@ class MyFamily(Resource):
 
 class ItemsLeft(Resource):
     def post(self):
+        print('start left', file=sys.stderr)
+
         parser = reqparse.RequestParser()  # initialize
         
         parser.add_argument('family_id', required=True)  # add args
@@ -81,14 +83,15 @@ class ItemsLeft(Resource):
             'items': []
         }
 
-        cursor.execute("SELECT items.id, item, c.category FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=0 ORDER BY c.category", (family_ids[0], ))
+        cursor.execute("SELECT items.id, item, c.category, item_desc FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=0 ORDER BY c.category", (family_ids[0], ))
         
         for row in cursor:
             print(row, file=sys.stderr)
             item = {
                 'id': row[0],
                 'item': row[1],
-                'category': row[2]
+                'category': row[2],
+                'description': row[3]
             }
             data['items'].append(item)
         
@@ -106,6 +109,8 @@ class ItemsLeft(Resource):
 
 class ItemsCollected(Resource):
     def post(self):
+        print('start collected', file=sys.stderr)
+
         parser = reqparse.RequestParser()  # initialize
         
         parser.add_argument('family_id', required=True)  # add args
@@ -127,13 +132,14 @@ class ItemsCollected(Resource):
             'items': []
         }
 
-        cursor.execute("SELECT items.id, item, c.category FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=1 ORDER BY modified_on DESC LIMIT 10", (family_ids[0], ))
+        cursor.execute("SELECT items.id, item, c.category, item_desc FROM items INNER JOIN categories c on items.category_id = c.id WHERE items.family_id=%s AND collected=1 ORDER BY modified_on DESC LIMIT 10", (family_ids[0], ))
 
         for row in cursor:
             item = {
                 'id': row[0],
                 'item': row[1],
-                'category': row[2]
+                'category': row[2],
+                'description': row[3]
             }
             data['items'].append(item)
         
@@ -151,6 +157,7 @@ class ItemsCollected(Resource):
 
 class ItemCollect(Resource):
     def post(self):
+        print('start collect', file=sys.stderr)
         parser = reqparse.RequestParser()  # initialize
         
         parser.add_argument('family_id', required=True)  # add args
@@ -173,15 +180,52 @@ class ItemCollect(Resource):
             'message': 'success'
         }
 
-        cursor.execute("CALL item_collect(%s, %s, %s)", (family_ids[0], args['given_id'], args['item_id']))
-        for row in cursor:
-            print(row, file=sys.stderr)
         # db.commit() # without this the api will only update locally and things act funny
+        cursor.callproc("item_collect", (family_ids[0], args['given_id'], args['item_id']))
+        print('add', file=sys.stderr)
+        for results in cursor.stored_results():
+            for row in results.fetchall():
+                print(row, file=sys.stderr)
+        
+        return data, 200
+
+class ItemAdd(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()  # initialize
+        
+        parser.add_argument('family_id', required=True)  # add args
+        parser.add_argument('passphrase_hash', required=True)
+        parser.add_argument('given_id', required=True)
+        parser.add_argument('item_name', required=True)
+        parser.add_argument('item_category_id', required=True)
+        parser.add_argument('item_desc', required=True)
+        
+        args = parser.parse_args()  # parse arguments to dictionary
+
+        cursor.execute("SELECT id FROM families WHERE id=%s AND passphrase_hash=%s", ( args['family_id'], args['passphrase_hash'] ))
+
+        family_ids = []
+        for row in cursor:
+            family_ids.append(row[0])
+        
+        if len(family_ids) != 1:
+            return {}, 401
+
+        data = {
+            'message': 'success'
+        }
+        
+        cursor.callproc("item_add", (family_ids[0], args['given_id'], args['item_name'], args['item_category_id'], args['item_desc']))
+        print('add', file=sys.stderr)
+        for results in cursor.stored_results():
+            for row in results.fetchall():
+                print(row, file=sys.stderr)
         
         return data, 200
 
 class GetCategories(Resource):
     def post(self):
+        print('start categories', file=sys.stderr)
         parser = reqparse.RequestParser()  # initialize
         
         parser.add_argument('family_id', required=True)  # add args
@@ -196,15 +240,18 @@ class GetCategories(Resource):
         for row in cursor:
             print(row, file=sys.stderr)
             family_ids.append(row[0])
-        
+            print('categories0.5', file=sys.stderr)
+        print('categories0', file=sys.stderr)
         if len(family_ids) != 1:
+            print('len = ', len(family_ids), file=sys.stderr)
             return {}, 401
-
+        print('categories1', file=sys.stderr)
         data = {
             'categories' : []
         }
 
         # cursor.execute("CALL get_categories(%s)", (family_ids[0], ), multi=True)
+        print('categories2', file=sys.stderr)
         cursor.callproc("get_categories", (family_ids[0], ))
         print('categories', file=sys.stderr)
         for results in cursor.stored_results():
@@ -266,6 +313,7 @@ api.add_resource(GetLogs, '/getfamilylogs')
 api.add_resource(GetCategories, '/getcategories')
 
 api.add_resource(ItemCollect, '/itemcollect')
+api.add_resource(ItemAdd, '/itemadd')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0')  # run our Flask app

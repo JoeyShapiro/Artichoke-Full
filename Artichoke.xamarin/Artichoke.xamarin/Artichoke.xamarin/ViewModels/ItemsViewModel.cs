@@ -18,18 +18,19 @@ namespace Artichoke.xamarin.ViewModels
 		private Item _selectedItem;
 
 		public ObservableCollection<ItemGroup> Items { get; }
-		public ObservableCollection<string> Categories { get; }
+		public ObservableCollection<Category> Categories { get; }
 		public Command LoadItemsCommand { get; }
 		public Command AddItemCommand { get;  }
 		public Command<Item> ItemTapped { get; }
 		public Command<Item> ItemSwiped { get; }
+		public Category SelectedCategory { get; set; }
 
 		public ItemsViewModel()
 		{
 			Title = "Browse";
 
 			Items = new ObservableCollection<ItemGroup>();
-			Categories = new ObservableCollection<string>();
+			Categories = new ObservableCollection<Category>();
 			LoadItemsCommand = new Command(async () => await ExecuteLoadItemsCommand());
 
 			ItemTapped = new Command<Item>(OnItemSelected);
@@ -44,41 +45,13 @@ namespace Artichoke.xamarin.ViewModels
 
 			try
 			{
-				Items.Clear();
-				Categories.Clear();
-
-				(var categories, Exception err) = await API_Interface.GetCategories();
-				if (err != null)
-                    await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok"); //TODO should this also return
-                (var items_left, Exception err2) = await API_Interface.GetItemsLeft();
-                if (err2 != null)
-                    await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
-                (var items_collected, Exception err3) = await API_Interface.GetItemsCollected();
-                if (err3 != null)
-                    await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
-
-                var itemGroupsLeft = new Dictionary<string, ItemGroup>();
-				foreach(var category in categories)
-				{
-					itemGroupsLeft.Add(category.Name, new ItemGroup(category.Name, new List<Item>()));
-					Categories.Add(category.Name);
-				}
-
-				foreach(var item in items_left)
-				{
-					itemGroupsLeft[item.Category].Add(item);
-				}
-
-				foreach(var itemGroup in itemGroupsLeft)
-					if (itemGroup.Value.Count > 0)
-						Items.Add(itemGroup.Value);
-				Items.Add(new ItemGroup("Recently Collected", items_collected.ToList()));
+				await reload();
 			}
 			catch (Exception ex)
 			{
 				Debug.WriteLine(ex);
-                await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "ok");
-            }
+				await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "ok");
+			}
 			finally
 			{
 				IsBusy = false;
@@ -101,11 +74,47 @@ namespace Artichoke.xamarin.ViewModels
 			}
 		}
 
+		//? not sure why this has a task, but it does
+		private async Task reload()
+		{
+            Items.Clear();
+			Categories.Clear();
+			//while (Items.Count > 0)
+			//	Items.RemoveAt(0);
+
+            (var categories, Exception err) = await API_Interface.GetCategories();
+            if (err != null)
+                await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok"); //TODO should this also return
+            (var items_left, Exception err2) = await API_Interface.GetItemsLeft();
+            if (err2 != null)
+                await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
+            (var items_collected, Exception err3) = await API_Interface.GetItemsCollected();
+            if (err3 != null)
+                await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
+
+            var itemGroupsLeft = new Dictionary<string, ItemGroup>();
+            foreach (var category in categories)
+            {
+                itemGroupsLeft.Add(category.Name, new ItemGroup(category.Name, new List<Item>()));
+                Categories.Add(category);
+            }
+
+            foreach (var item in items_left)
+            {
+                itemGroupsLeft[item.Category].Add(item);
+            }
+
+            foreach (var itemGroup in itemGroupsLeft)
+                if (itemGroup.Value.Count > 0)
+                    Items.Add(itemGroup.Value);
+            Items.Add(new ItemGroup("Recently Collected", items_collected.ToList()));
+        }
+
 		private async void OnAddItem(object obj)
 		{
 			//await API_Interface.ItemAdd();
-            //await Shell.Current.GoToAsync(nameof(NewItemPage));
-        }
+			//await Shell.Current.GoToAsync(nameof(NewItemPage));
+		}
 
 		async void OnItemSelected(Item item)
 		{
@@ -122,22 +131,22 @@ namespace Artichoke.xamarin.ViewModels
 				return;
 
 			Exception err = await API_Interface.ItemCollect(item);
-			if (err != null)
+            if (err != null)
 			{
-				await ExecuteLoadItemsCommand();
+				//await ExecuteLoadItemsCommand();
 				await Application.Current.MainPage.DisplayAlert("Error", err.Message, "ok");
 			}
-			else
-				await ExecuteLoadItemsCommand();
+			//else
+			//await ExecuteLoadItemsCommand();
 
-
-		}
+			await reload(); // you cant call the load function, maybe the `isbusy` thing
+        }
 
 		public async Task<Exception> AddItem(Item item)
 		{
-			Exception err = await API_Interface.ItemAdd(item);
+			Exception err = await API_Interface.ItemAdd(item, SelectedCategory.id);
 
-            await ExecuteLoadItemsCommand();
+			await reload();
 
 			return err; // this will print error after
 		}
