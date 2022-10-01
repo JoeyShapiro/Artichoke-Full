@@ -77,10 +77,7 @@ namespace Artichoke.xamarin.ViewModels
 		//? not sure why this has a task, but it does
 		private async Task reload()
 		{
-			//         Items.Clear();
-			//Categories.Clear();
-			//while (Items.Count > 0) // this seems faster than clear
-			//	Items.RemoveAt(0);
+			Categories.Clear();
 
 			(var categories, Exception err) = await API_Interface.GetCategories();
 			if (err != null)
@@ -103,118 +100,33 @@ namespace Artichoke.xamarin.ViewModels
 			{
 				itemGroupsLeft[item.Category].Add(item);
 				//if (Items.Single(group => group.Name == item.Category).Contains(item))
-
 			}
+			//var groupContains = items_collected.SingleOrDefault(item => item.Id == itemOld.Id); // is this a ref
 
-			if (Items.Count > 0)
+			// update the groups
+			// this must run even on empty categories, so they can be updated
+			foreach (var itemGroup in itemGroupsLeft)
 			{
-                #region Brian's Code
-    //            for (int i = 0; i < Items.Count; i++)
-				//{
-				//	if (i < Items.Count - 1)
-				//		Items[i] = itemGroupsLeft[Items[i].Name];
-				//	else
-				//		Items[i] = new ItemGroup("Recently Collected", items_collected.ToList());
-    //            }
-				#endregion
-
-				#region Joey's Redemption
-				var itemsNew = new ObservableCollection<ItemGroup>();
-
-                foreach (var itemGroup in itemGroupsLeft)
-                    if (itemGroup.Value.Count > 0)
-                    {
-                        await Task.Delay(1); // this needs to be here for ios to load an observable collection
-                        itemsNew.Add(itemGroup.Value);
-						// they could be misallined
-                    }
-				Items[Items.Count - 1] = new ItemGroup("Recently Collected", items_collected.ToList());
-                #endregion
-
-                #region Joey's Code
-                //// remove needed items
-                //for (int j = 0; j < Items.Count; j++)
-                //{
-                //	var itemGroup = Items[j];
-
-                //	for (int i = itemGroup.Count - 1; i >= 0; i--)
-                //	{
-                //		var itemOld = itemGroup[i];
-
-                //		if (itemGroup.Name == "Recently Collected")
-                //		{
-                //			var groupContains = items_collected.SingleOrDefault(item => item.Id == itemOld.Id);
-
-                //			if (groupContains == null)
-                //			{
-                //				itemGroup.Remove(itemOld);
-                //			}
-                //		}
-                //		else
-                //		{
-                //			var groupNew = itemGroupsLeft[itemGroup.Name];
-                //			var groupContains = groupNew.SingleOrDefault(item => item.Id == itemOld.Id);
-
-                //			if (groupContains == null)
-                //			{
-                //				itemGroup.Remove(itemOld);
-                //			}
-                //		}
-                //	}
-
-                //	Items[j] = itemGroup; // arbitrary reset so change can be seen
-                //}
-                //// add needed items
-                //// items left
-                //foreach (var itemNew in items_left)
-                //{
-                //	var foundItem = false;
-
-                //	var foundGroup = Items.SingleOrDefault(groupOld => groupOld.Name == itemNew.Category);
-                //	if (foundGroup != null)
-                //		foundItem = foundGroup.SingleOrDefault(item => item.Id == itemNew.Id) != null;
-
-                //	if (!foundItem && foundGroup != null)
-                //	{
-                //		foundGroup.Add(itemNew);
-                //		for (int i = 0; i < Items.Count; i++)
-                //			if (Items[i].Name == foundGroup.Name)
-                //				Items[i] = foundGroup;
-                //	}
-                //	else if (!foundItem && foundGroup == null)
-                //	{
-                //		var list = new List<Item>();
-                //		list.Add(itemNew);
-                //		Items.Add(new ItemGroup(itemNew.Category, list));
-                //	}
-                //}
-                //// items collected
-                //foreach (var itemNew in items_collected)
-                //{
-                //	var foundItem = false;
-                //	var foundGroup = Items.SingleOrDefault(groupOld => groupOld.Name == "Recently Collected");
-                //	foundItem = foundGroup.SingleOrDefault(item => item.Id == itemNew.Id) != null;
-
-                //	if (!foundItem)
-                //	{
-                //		foundGroup.Insert(0, itemNew); // need to add and remove, or something
-                //		for (int i = 0; i < Items.Count; i++)
-                //			if (Items[i].Name == foundGroup.Name)
-                //				Items[i] = foundGroup;
-                //	}
-                //}
-                #endregion
-            }
-            else
-			{
-				foreach (var itemGroup in itemGroupsLeft)
-					if (itemGroup.Value.Count > 0)
-					{
-						await Task.Delay(1); // this needs to be here for ios to load an observable collection
-						Items.Add(itemGroup.Value);
-					}
-				Items.Add(new ItemGroup("Recently Collected", items_collected.ToList()));
+				var groupIndex = -1;
+				for (int i = 0; i < Items.Count; i++)
+					if (Items[i].Name == itemGroup.Value.Name)
+						groupIndex = i;
+				if (Items.Count == 0) // do this first to be clever
+					Items.Add(itemGroup.Value);
+				if (groupIndex == -1 && itemGroup.Value.Count > 0)
+				{
+					await Task.Delay(1); // this needs to be here for ios to load an observable collection
+					Items.Insert(Items.Count - 1, itemGroup.Value);
+				}
+				else if (groupIndex > -1)
+					Items[groupIndex] = itemGroup.Value;
 			}
+			// remove any empty groups
+			for (int i = Items.Count - 1; i >= 0; i--)
+				if (Items[i].Count == 0)
+					Items.RemoveAt(i);
+			// update "recently collcted"
+			Items[Items.Count - 1] = new ItemGroup("Recently Collected", items_collected.ToList());
 		}
 
 		private async void OnAddItem(object obj)
