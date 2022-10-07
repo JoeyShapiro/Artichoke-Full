@@ -153,6 +153,10 @@ CREATE PROCEDURE get_family_logs (IN given_family_id int)
             ORDER BY modified_on DESC;
     END //
 
+-- get and verify an account
+DELIMITER //
+
+
 -- dummy data
 -- families
 INSERT INTO artichoke.families (family_name, passphrase_hash, sub_expires_on)

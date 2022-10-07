@@ -58,6 +58,37 @@ class MyFamily(Resource):
 
         return data, 200  # return data with 200 OK
 
+class GetAccount(Resource):
+    def post(self):
+        print('start categories', file=sys.stderr)
+        parser = reqparse.RequestParser()  # initialize
+        
+        parser.add_argument('given_id', required=True)  # add args
+        parser.add_argument('given_passphrase_hash', required=True)
+        
+        args = parser.parse_args()  # parse arguments to dictionary
+
+        data = {}
+
+        # cursor.execute("CALL get_categories(%s)", (family_ids[0], ), multi=True)
+        cursor.callproc("get_account", (args['given_id'], args['given_passphrase_hash']))
+        print('account', file=sys.stderr)
+        for results in cursor.stored_results():
+            for row in results.fetchall():
+                print(row, file=sys.stderr)
+                data = {
+                    'given_id' : row[0],
+                    'given_passphrase_hash': args['given_passphrase_hash'], #TODO dont send this
+                    'username' : row[1],
+                    'family_id': row[2],
+                    'family_passphrase_hash': row[4]
+                }
+        
+        if data == {}:
+            return {"error": "invalid username or password"}, 401
+        
+        return data, 200
+
 class ItemsLeft(Resource):
     def post(self):
         print('start left', file=sys.stderr)
@@ -240,18 +271,14 @@ class GetCategories(Resource):
         for row in cursor:
             print(row, file=sys.stderr)
             family_ids.append(row[0])
-            print('categories0.5', file=sys.stderr)
-        print('categories0', file=sys.stderr)
         if len(family_ids) != 1:
             print('len = ', len(family_ids), file=sys.stderr)
             return {}, 401
-        print('categories1', file=sys.stderr)
         data = {
             'categories' : []
         }
 
         # cursor.execute("CALL get_categories(%s)", (family_ids[0], ), multi=True)
-        print('categories2', file=sys.stderr)
         cursor.callproc("get_categories", (family_ids[0], ))
         print('categories', file=sys.stderr)
         for results in cursor.stored_results():
@@ -309,6 +336,7 @@ class GetLogs(Resource):
 api.add_resource(ItemsLeft, '/itemsleft')  # '/users' is our entry point
 api.add_resource(ItemsCollected, '/itemscollected')
 api.add_resource(MyFamily, '/myfamily')
+api.add_resource(GetAccount, '/getaccount')
 api.add_resource(GetLogs, '/getfamilylogs')
 api.add_resource(GetCategories, '/getcategories')
 

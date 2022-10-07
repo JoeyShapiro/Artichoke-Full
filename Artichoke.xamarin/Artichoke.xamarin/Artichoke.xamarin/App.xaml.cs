@@ -4,6 +4,7 @@ using Xamarin.Forms.Xaml;
 using Artichoke.xamarin.Services;
 using Artichoke.xamarin.Views;
 using Artichoke.xamarin.Models;
+using Xamarin.Essentials;
 
 namespace Artichoke.xamarin
 {
@@ -15,8 +16,13 @@ namespace Artichoke.xamarin
             InitializeComponent();
 
             DependencyService.Register<MockDataStore>();
-            Account.Load();
+            Settings.Load();
+
             MainPage = new AppShell();
+            var start_path =
+                Settings.GivenID == null ? $"//{nameof(LoginPage)}" : $"//{nameof(ItemsPage)}";
+
+            Shell.Current.GoToAsync(start_path);
         }
 
         protected override void OnStart ()

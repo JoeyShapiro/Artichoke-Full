@@ -31,7 +31,7 @@
 					ItemDisplayBinding="{Binding Name}"
 					SelectedItem="{Binding SelectedCategory}" />
 
-            <Entry x:Name="addEntry" Grid.Column="1" Grid.Row="0" />
+			<Entry x:Name="addEntry" Grid.Column="1" Grid.Row="0" />
 			<Editor x:Name="addDesc" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="3" />
 			<Button Text="+" x:Name="addSave" Grid.Column="2" Grid.Row="0" Clicked="addSave_Clicked" />
 		</Grid>

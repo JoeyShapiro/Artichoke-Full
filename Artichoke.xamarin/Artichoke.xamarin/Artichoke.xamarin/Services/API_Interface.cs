@@ -27,19 +27,41 @@ namespace Artichoke.xamarin.Services
 
 			var values = new Dictionary<string, string>
 			{
-				{ "family_id", "1" },
-				{ "passphrase_hash", "sha256" },
-				{ "given_id", "1" }
+				{ "family_id", Services.Settings.FamilyID },
+				{ "passphrase_hash", Services.Settings.FamilyPassphraseHash },
+				{ "given_id", Services.Settings.GivenID }
 			};
 
 			(string result, Exception err) = await apiPostRequest(url, values);
 			if (err != null)
 				return (null, err);
 
+			if (result.Length < 5)
+				return (new List<Item>(), null);
+
 			var items = JsonConvert.DeserializeObject<IEnumerable<Item>>(result);
 			items.ToList().ForEach(item => item.IsNotCollected = true);
 
 			return (items, null);
+		}
+
+		public static async Task<(Account, Exception)> GetAccount(string given_id, string given_passphrase_hash)
+		{
+			string url = "https://" + api_address + ":" + api_port + "/getaccount";
+
+			var values = new Dictionary<string, string>
+			{
+				{ "given_id", given_id },
+				{ "given_passphrase_hash", given_passphrase_hash }
+			};
+
+			(string result, Exception err) = await apiPostRequest(url, values);
+			if (err != null)
+				return (null, err);
+
+			var account = JsonConvert.DeserializeObject<Account>(result);
+
+			return (account, null);
 		}
 
 		public static async Task<(Family, Exception)> GetMyFamily()
@@ -48,9 +70,9 @@ namespace Artichoke.xamarin.Services
 
 			var values = new Dictionary<string, string>
 			{
-				{ "family_id", "1" },
-				{ "passphrase_hash", "sha256" },
-				{ "given_id", "1" }
+				{ "family_id", Services.Settings.FamilyID },
+				{ "passphrase_hash", Services.Settings.FamilyPassphraseHash },
+				{ "given_id", Services.Settings.GivenID }
 			};
 
 			(string result, Exception err) = await apiPostRequest(url, values);
@@ -68,9 +90,9 @@ namespace Artichoke.xamarin.Services
 
 			var values = new Dictionary<string, string>
 			{
-				{ "family_id", "1" },
-				{ "passphrase_hash", "sha256" },
-				{ "given_id", "1" }
+				{ "family_id", Services.Settings.FamilyID },
+				{ "passphrase_hash", Services.Settings.FamilyPassphraseHash },
+				{ "given_id", Services.Settings.GivenID }
 			};
 
 			(string result, Exception err) = await apiPostRequest(url, values);
@@ -88,9 +110,9 @@ namespace Artichoke.xamarin.Services
 
 			var values = new Dictionary<string, string>
 			{
-				{ "family_id", "1" },
-				{ "passphrase_hash", "sha256" },
-				{ "given_id", "1" }
+				{ "family_id", Services.Settings.FamilyID },
+				{ "passphrase_hash", Services.Settings.FamilyPassphraseHash },
+				{ "given_id", Services.Settings.GivenID }
 			};
 
 			(string result, Exception err) = await apiPostRequest(url, values);
@@ -108,9 +130,9 @@ namespace Artichoke.xamarin.Services
 
 			var values = new Dictionary<string, string>
 			{
-				{ "family_id", "1" },
-				{ "passphrase_hash", "sha256" },
-				{ "given_id", "1" }
+				{ "family_id", Services.Settings.FamilyID },
+				{ "passphrase_hash", Services.Settings.FamilyPassphraseHash },
+				{ "given_id", Services.Settings.GivenID }
 			};
 
 			(string result, Exception err) = await apiPostRequest(url, values);
@@ -128,9 +150,9 @@ namespace Artichoke.xamarin.Services
 
 			var values = new Dictionary<string, string>
 			{
-				{ "family_id", "1" },
-				{ "passphrase_hash", "sha256" },
-				{ "given_id", "1" },
+				{ "family_id", Services.Settings.FamilyID },
+				{ "passphrase_hash", Services.Settings.FamilyPassphraseHash },
+				{ "given_id", Services.Settings.GivenID },
 				{ "item_id", item.Id }
 			};
 
@@ -147,9 +169,9 @@ namespace Artichoke.xamarin.Services
 
 			var values = new Dictionary<string, string>
 			{
-				{ "family_id", "1" },
-				{ "passphrase_hash", "sha256" },
-				{ "given_id", "1" },
+				{ "family_id", Services.Settings.FamilyID },
+				{ "passphrase_hash", Services.Settings.FamilyPassphraseHash },
+				{ "given_id", Services.Settings.GivenID },
 				{ "item_name", item.Name },
 				{ "item_category_id", category_id.ToString() },
 				{ "item_desc", item.Desc }
