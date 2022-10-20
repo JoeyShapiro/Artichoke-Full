@@ -66,7 +66,7 @@
 							</SwipeItems>
 						</SwipeView.LeftItems>
 						<!-- Content -->
-						<StackLayout Padding="10" x:DataType="model:Item">
+						<StackLayout Padding="10" x:DataType="model:Item" BackgroundColor="AliceBlue">
 							<Label Text="{Binding Name}" 
 								LineBreakMode="NoWrap" 
 								Style="{DynamicResource ListItemTextStyle}" 

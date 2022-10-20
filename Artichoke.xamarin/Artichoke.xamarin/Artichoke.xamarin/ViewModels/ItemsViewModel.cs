@@ -115,7 +115,7 @@ namespace Artichoke.xamarin.ViewModels
 					Items.Add(itemGroup.Value);
 				if (groupIndex == -1 && itemGroup.Value.Count > 0)
 				{
-					await Task.Delay(1); // this needs to be here for ios to load an observable collection
+					await Task.Delay(75); // this needs to be here for ios to load an observable collection
 					Items.Insert(Items.Count - 1, itemGroup.Value);
 				}
 				else if (groupIndex > -1)

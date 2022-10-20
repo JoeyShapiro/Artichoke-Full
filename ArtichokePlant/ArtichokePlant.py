@@ -18,12 +18,6 @@ db = mysql.connector.connect(
 )
 
 cursor = db.cursor()
-cursor.execute("SELECT sub_expires_on FROM families WHERE family_name='Shapiro' AND passphrase_hash='sha256'")
-
-for (x) in cursor:
-    print(time.ctime(x[0]))
-    if time.time() < int(x[0]):
-        print('valid')
 
 class MyFamily(Resource):
     def post(self):

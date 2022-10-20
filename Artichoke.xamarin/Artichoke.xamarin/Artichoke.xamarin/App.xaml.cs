@@ -20,7 +20,7 @@ namespace Artichoke.xamarin
 
             MainPage = new AppShell();
             var start_path =
-                Settings.GivenID == null ? $"//{nameof(LoginPage)}" : $"//{nameof(ItemsPage)}";
+                Settings.GivenID == string.Empty ? $"//{nameof(LoginPage)}" : $"//{nameof(ItemsPage)}";
 
             Shell.Current.GoToAsync(start_path);
         }
